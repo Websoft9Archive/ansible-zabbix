@@ -1,0 +1,70 @@
+---
+# Zabbix
+- name: Zabbix
+  hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo 
+
+  roles:
+    - { role: common, tags: "common" }
+    - { role: zabbix, tags: "zabbix" }
+
+  # tasks:
+  #   - name: Dwonload zabbix.deb for ubuntu
+  #     get_url:
+  #       url: https://repo.zabbix.com/zabbix/4.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.2-1+bionic_all.deb
+  #       dest: ~/zabbix.deb
+
+  #   - name: Install zabbix.deb
+  #     command: dpkg -i ~/zabbix.deb
+
+  #   - name: update cache
+  #     apt:
+  #       name: "*"
+  #       state: latest
+
+  #   - name: Install zabbix-server-mysql zabbix-frontend-php zabbix-agent
+  #     apt: 
+  #       name: [zabbix-server-mysql, zabbix-frontend-php, zabbix-agent]
+  #       state: latest
+
+  #   - name: Create a new database with name 'zabbix'
+  #     mysql_db:
+  #       login_user: root
+  #       name: zabbix
+  #       encoding: utf8
+  #       collation: utf8_bin
+  #       state: present
+        
+  #   - name: Create database user with name 'bob' and password '12345' with all database privileges
+  #     mysql_user:
+  #       name: zabbix
+  #       password: KNyQ45W2&4
+  #       priv: 'zabbix.*:ALL'
+  #       state: present
+
+  #   - name: Restore database
+  #     mysql_db:
+  #       login_user: zabbix
+  #       login_password: KNyQ45W2&4
+  #       name: zabbix
+  #       state: import
+  #       target: /usr/share/doc/zabbix-server-mysql*/create.sql.gz
+
+  #   - name: Change zabbix_server.conf
+  #     lineinfile:
+  #       path: /etc/zabbix/zabbix_server.conf
+  #       regexp: '# DBPassword='
+  #       line: DBPassword=KNyQ45W2&4
+
+  #   - name: Replace apache.conf
+  #     template:
+  #       src: apache.conf
+  #       dest: /etc/zabbix/apache.conf
+
+  #   - name: Restart service
+  #     service:
+  #       name: [zabbix-server, zabbix-agent, apache2]
+  #       state: restarted
+  #       enabled: yes

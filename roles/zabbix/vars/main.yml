@@ -1,0 +1,1 @@
+version: LTS          # 取值范围 [LTS, latest] 默认为 LTS 长期支持版本，latest 为最新版
