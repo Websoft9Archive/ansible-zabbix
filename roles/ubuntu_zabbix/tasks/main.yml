@@ -1,0 +1,178 @@
+# ---
+#     # 添加apt源
+#     - name: Dwonload zabbix.deb-LTS for ubuntu
+#       get_url:
+#         url: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
+#         dest: ~/zabbix.deb
+#       when: version=='LTS'
+
+#     - name: Dwonload zabbix.deb-latest for ubuntu
+#       get_url:
+#         url: https://repo.zabbix.com/zabbix/4.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.2-1+bionic_all.deb
+#         dest: ~/zabbix.deb
+#       when: version=='latest'
+
+#     - name: Install zabbix.deb
+#       command: dpkg -i ~/zabbix.deb
+
+#     - name: update cache
+#       apt:
+#         update_cache: yes
+
+#     # 安装
+#     - name: Install zabbix-server-mysql zabbix-frontend-php zabbix-agent
+#       apt:
+#         name: [zabbix-server-mysql, zabbix-frontend-php, zabbix-agent]
+#         state: latest
+
+#     # 配置数据库
+#     - name: Change MySQL root user password
+#       mysql_user:
+#         login_user: root
+#         login_password: '{{mysql_password}}'
+#         name: root
+#         host: localhost
+#         password: '{{mysql_password}}'
+
+#     - name: change user's plugin -1
+#       copy:
+#         src: user_policy.txt
+#         dest: /root/user_policy.txt
+#         mode: 0644
+
+#     - name: change user's plugin -2
+#       shell: mysql -uroot -p{{mysql_password}} < /root/user_policy.txt
+
+#     - name: restart mariadb
+#       service:
+#         name: mysql
+#         state: restarted
+
+#     - name: Removes all anyelse user accounts
+#       mysql_user:
+#         login_user: root
+#         login_password: "{{mysql_password}}"
+#         name: ''
+#         host_all: yes
+#         state: absent
+
+#     - name: Remove hostname user accounts
+#       mysql_user: login_user=root login_password={{mysql_password}} name='root' host={{ ansible_nodename }} state=absent
+
+#     - name: Removes test Databases
+#       mysql_db:
+#         login_user: root
+#         login_password: "{{mysql_password}}"
+#         name: test
+#         state: absent
+
+#     - name: Removing privileges on test database
+#       command: mysql -uroot -p{{mysql_password}} -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
+
+#     - name: Create a new database with name 'zabbix'
+#       mysql_db:
+#         login_user: root
+#         login_password: "{{mysql_password}}"
+#         name: zabbix
+#         encoding: utf8
+#         collation: utf8_bin
+#         state: present
+
+    # - name: Create database user with name 'zabbix' and password with all database privileges
+    #   mysql_user:
+    #     login_user: root
+    #     login_password: "{{mysql_password}}"
+    #     name: zabbix
+    #     password: "{{mysql_password}}"
+    #     priv: 'zabbix.*:ALL'
+    #     state: present
+
+    # - name: unarchive data.sql.gz fot LTS version
+    #   command: gzip -d /usr/share/doc/zabbix-server-mysql/create.sql.gz
+    #   when: version=='LTS'
+
+    # - name: unarchive data.sql.gz for latest version
+    #   command: gzip -d /usr/share/zabbix-server-mysql/{{item}}
+    #   with_items:
+    #     - schema.sql.gz
+    #     - images.sql.gz
+    #     - data.sql.gz
+    #   when: version=='latest'
+
+    # - name: Restore database fot LTS version
+    #   mysql_db:
+    #     login_user: zabbix
+    #     login_password: "{{mysql_password}}"
+    #     name: zabbix
+    #     state: import
+    #     target: /usr/share/doc/zabbix-server-mysql/create.sql
+    #   when: version=='LTS'
+
+    # - name: Restore database for latest version
+    #   mysql_db:
+    #     login_user: zabbix
+    #     login_password: "{{mysql_password}}"
+    #     name: zabbix
+    #     state: import
+    #     target: /usr/share/zabbix-server-mysql/{{item}}
+    #   with_items:
+    #     - schema.sql
+    #     - images.sql
+    #     - data.sql
+    #   when: version=='latest'
+
+    # # 配置 zabbix 以及 apache
+    # - name: Change zabbix_server.conf
+    #   lineinfile:
+    #     path: /etc/zabbix/zabbix_server.conf
+    #     regexp: '# DBPassword='
+    #     line: DBPassword="{{mysql_password}}"
+
+    # - name: Replace apache.conf
+    #   template:
+    #     src: apache.conf
+    #     dest: /etc/zabbix/apache.conf
+
+    # - name: Restart service
+    #   service:
+    #     name: "{{item}}"
+    #     state: restarted
+    #     enabled: yes
+    #   with_items:
+    #     - zabbix-server
+    #     - zabbix-agent
+    #     - apache2
+
+    - name: create /credentials
+      file:
+        path: /credentials
+        state: directory
+
+    - name: Create Password.txt
+      file:
+        path: /credentials/password.txt
+        mode: 644
+        state: touch
+
+    - name: Write Databases Password
+      shell: |
+        echo 'Databases user:root Password:'{{mysql_password}}  > /credentials/password.txt
+        echo 'Databases user:zabbix Password:'{{mysql_password}}  >> /credentials/password.txt
+
+    - name: Password Text File Permission
+      file:
+        path: /credentials/password.txt
+        mode: 0644
+
+    # - name: Databases Random Password
+    #   copy:
+    #     src: init.sh
+    #     dest: /root/
+    #     mode: 0750
+
+    # - name: Setting Startup
+    #   lineinfile:
+    #     path: /etc/rc.local
+    #     regexp: '/root/init.sh'
+    #     line: '/root/init.sh'
+    #     mode: 0750

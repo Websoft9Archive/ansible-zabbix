@@ -7,8 +7,10 @@
   become_method: sudo 
 
   roles:
-    - { role: common, tags: "common" }
-    - { role: zabbix, tags: "zabbix" }
+    - { role: ubuntu_common, tags: "ubuntu", when: "ansible_os_family == 'Debian'" }
+    - { role: centos_common, tags: "centos", when: "ansible_os_family == 'RedHat'" }
+    - { role: ubuntu_zabbix, tags: "ubuntu_zabbix", when: "ansible_os_family == 'Debian'" }
+    - { role: centos_zabbix, tags: "centos_zabbix", when: "ansible_os_family == 'RedHat'" }
 
   # tasks:
   #   - name: Dwonload zabbix.deb for ubuntu
