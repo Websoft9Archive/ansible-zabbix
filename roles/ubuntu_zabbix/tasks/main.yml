@@ -89,15 +89,7 @@
 
     - name: unarchive data.sql.gz fot LTS version
       command: gzip -d /usr/share/doc/zabbix-server-mysql/create.sql.gz
-      when: version=='LTS'
-
-    - name: unarchive data.sql.gz for latest version
-      command: gzip -d /usr/share/zabbix-server-mysql/{{item}}
-      with_items:
-        - schema.sql.gz
-        - images.sql.gz
-        - data.sql.gz
-      when: version=='latest'
+      
 
     - name: Restore database fot LTS version
       mysql_db:
@@ -106,27 +98,14 @@
         name: zabbix
         state: import
         target: /usr/share/doc/zabbix-server-mysql/create.sql
-      when: version=='LTS'
-
-    - name: Restore database for latest version
-      mysql_db:
-        login_user: zabbix
-        login_password: "{{mysql_password}}"
-        name: zabbix
-        state: import
-        target: /usr/share/zabbix-server-mysql/{{item}}
-      with_items:
-        - schema.sql
-        - images.sql
-        - data.sql
-      when: version=='latest'
+      
 
     # 配置 zabbix 以及 apache
     - name: Change zabbix_server.conf
       lineinfile:
         path: /etc/zabbix/zabbix_server.conf
         regexp: '# DBPassword='
-        line: DBPassword="{{mysql_password}}"
+        line: DBPassword={{mysql_password}}
 
     - name: Replace apache.conf
       template:
@@ -156,23 +135,52 @@
 
     - name: Write Databases Password
       shell: |
-        echo 'Databases user:root Password:'{{mysql_password}}  > /credentials/password.txt
-        echo 'Databases user:zabbix Password:'{{mysql_password}}  >> /credentials/password.txt
+        echo -e 'Databases username:root \nDatabase Password:'{{mysql_password}}  > /credentials/password.txt
+        echo -e 'Databases username:zabbix \nDatabase Password:'{{mysql_password}}  >> /credentials/password.txt
 
     - name: Password Text File Permission
       file:
         path: /credentials/password.txt
         mode: 0644
 
-    # - name: Databases Random Password
-    #   copy:
-    #     src: init.sh
-    #     dest: /root/
-    #     mode: 0750
+# 创建rc.local服务，使脚本能够开机自启动
+    - name: create rc-local.service
+      template:
+        src: rc-local.service
+        dest: /etc/systemd/system/rc-local.service
+        mode: 0644
 
-    # - name: Setting Startup
-    #   lineinfile:
-    #     path: /etc/rc.local
-    #     regexp: '/root/init.sh'
-    #     line: '/root/init.sh'
-    #     mode: 0750
+    - name: create rc.local
+      template:
+        src: rc.local
+        dest: /etc/rc.local
+        mode: 0755
+
+# 设置随机密码
+    - name: start rc-local service
+      service:
+        name: rc-local
+        state: started
+        enabled: yes
+
+    - name: Databases Random Password
+      copy:
+        src: init-57.sh
+        dest: /root/init.sh
+        mode: 0750
+
+    - name: Setting Startup
+      lineinfile:
+        path: /etc/rc.local
+        regexp: '/root/init.sh'
+        line: '/root/init.sh'
+        mode: 0750
+
+# 删除多余文件
+    - name: delete extra files
+      file:
+        path: /root/{{item}}
+        state: absent
+      with_items:
+        - zabbix.deb
+        - user_policy.txt
