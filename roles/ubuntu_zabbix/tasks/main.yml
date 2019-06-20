@@ -87,9 +87,8 @@
         priv: 'zabbix.*:ALL'
         state: present
 
-    - name: unarchive data.sql.gz fot LTS version
+    - name: unarchive data.sql.gz
       command: gzip -d /usr/share/doc/zabbix-server-mysql/create.sql.gz
-      
 
     - name: Restore database fot LTS version
       mysql_db:
@@ -98,7 +97,6 @@
         name: zabbix
         state: import
         target: /usr/share/doc/zabbix-server-mysql/create.sql
-      
 
     # 配置 zabbix 以及 apache
     - name: Change zabbix_server.conf
