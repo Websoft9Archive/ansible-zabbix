@@ -1,13 +1,25 @@
 ---
-# Zabbix
+# # 服务器前置任务(ubuntu使用)
+- name: Pre_tasks for Ubuntu
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: False
+  pre_tasks:
+   - name: Install Python
+     raw: sudo apt update && sudo apt-get -y install python
+     ignore_errors: True
+
+
+# # 核心任务
+
 - name: Zabbix
   hosts: all
   become: yes
-  become_user: root
-  become_method: sudo 
+  become_method: sudo
+  gather_facts: True
 
   roles:
-    - { role: ubuntu_common, tags: "ubuntu", when: "ansible_os_family == 'Debian'" }
-    - { role: centos_common, tags: "centos", when: "ansible_os_family == 'RedHat'" }
-    - { role: ubuntu_zabbix, tags: "ubuntu_zabbix", when: "ansible_os_family == 'Debian'" }
-    - { role: centos_zabbix, tags: "centos_zabbix", when: "ansible_os_family == 'RedHat'" }
+    - { role: common, tags: "common"}      
+    - { role: zabbix, tags: "zabbix"}
+    - { role: end, tags: "end"}
