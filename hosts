@@ -1,2 +1,2 @@
 [hosts]
-40.121.17.126  ansible_ssh_user=websoft9 ansible_ssh_pass=Qwerty123456  ansible_sudo_pass=Qwerty123456
+40.114.49.48  ansible_ssh_user=websoft9 ansible_ssh_pass=Qwerty123456  ansible_sudo_pass=Qwerty123456
