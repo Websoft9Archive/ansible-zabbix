@@ -1,51 +1,74 @@
 # 参数
 
-## 组件及路径
+Zabbix 预装包包含 Zabbix 运行所需一序列支撑软件（简称为“组件”），下面列出主要组件名称、安装路径、配置文件地址、端口、版本等重要的信息。
 
-Zabbix部署包中不仅仅只有Zabbix本身，还包含一序列支持Zabbix运行所需的其他软件（这里称之为组件），下面列出主要组件名称、安装路径、配置文件地址等重要的信息：
+> 本自动化部署方案默认安装：Zabbix-Server, Zabbix-Agent, Zabbix-Web 三大组件。
+
+## 路径
 
 ### Zabbix
 
-Zabbix
+Zabbix 安装目录: /usr/share/zabbix  
+Zabbix 配置文件: /usr/share/zabbix/conf/zabbix.conf.php  
+Zabbix-Agent 日志文件：/var/log/zabbix/zabbix_agentd.log   
+Zabbix-Server 日志文件：/var/log/zabbix/zabbix_server.log
 
-Zabbix安装目录: /usr/share/zabbix
-Zabbix配置文件: /usr/share/zabbix/conf/zabbix.conf.php
-Zabbix日志文件目录：/var/log/zabbix/zabbix_agentd.log   /var/log/zabbix/zabbix_server.log
+> Zabbix 配置文件中包含数据库连接信息，更改了 MySQL 数据库账号密码，此处也需要对应修改
 
-> Zabbix配置文件中包含数据库连接信息，更改了MariaDB数据库账号密码，此处也需要对应修改
+### PHP
+
+PHP 配置文件： */etc/php/7.2/apache2/php.ini*  
+PHP Modules 配置文件目录： */etc/php/7.2/mods-available*
 
 ### Apache
-Apache vhost configuration file: /etc/apache2/sites-available/000-default.conf
-Apache configuaration file: /etc/apache2/apache2.conf
-Apache logs file: /var/log/apache2
+
+Apache 虚拟主机配置文件：*/etc/apache2/sites-available/000-default.conf*  
+Apache 主配置文件：*/etc/apache2/apache2.conf*  
+Apache 日志文件：*/var/log/apache2*  
+Apache 模块配置目录： */etc/apache2/mods-available*
 
 ### MariaDB
-Database install directory: /usr/share/mysql 
-Database data directory: /var/lib/mysql 
-Database Configuration /etc/mysql/mariadb.conf.d/50-server.cnf
+
+MariaDB 安装路径：*/usr/share/mysql*    
+MariaDB 数据文件：*/var/lib/mysql*  
+MariaDB 配置文件：*/etc/mysql/mariadb.conf.d/50-server.cnf*
 
 
 ## 端口号
 
-下面是您在使用本镜像过程中，需要用到的端口号，请通过云控制台安全组进行设置
+在云服务器中，通过 **[安全组设置](https://support.websoft9.com/docs/faq/zh/tech-instance.html)** 来控制（开启或关闭）端口是否可以被外部访问。 
+
+本应用建议开启的端口如下：
 
 | 名称 | 端口号 | 用途 |  必要性 |
 | --- | --- | --- | --- |
-| MariaDB | 3306 | 远程连接MariaDB | 可选 |
-| HTTP | 80 | 通过http访问Zabbix | 必须 |
-| HTTPS | 443 | 通过https访问Zabbix | 可选 |
+| HTTP | 80 | 通过 HTTP 访问 Zabbix | 必须 |
+| HTTPS | 443 | 通过 HTTPS 访问 Zabbix | 可选 |
+| MySQL | 3306 | 远程连接 MariaDB | 可选 |
 
 ## 版本号
 
-组件对应的基本版本号可以通过云市场商品页面查看，但部署到您的服务器之后，版本会有一定的升级，故更为精准的版本请通过在服务器上运行命令查看：
+组件版本号可以通过云市场商品页面查看。但部署到您的服务器之后，组件会自动进行更新导致版本号有一定的变化，故精准的版本号请通过在服务器上运行命令查看：
 
 ```shell
-Apache version:
+# Linux Version
+lsb_release -a
+
+# PHP Version
+php -v
+
+# List Installed PHP Modules
+php -m
+
+# Apache version on Ubuntu
 apache2 -v
 
-MariaDB version:
-mysql -V
+# Apache version on Centos
+httpd -v
 
-php:
-php -v
+# List Installed Apache Modules
+apachectl -M
+
+# MySQL version:
+mysql -V
 ```
