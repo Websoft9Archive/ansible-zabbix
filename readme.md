@@ -9,6 +9,8 @@
 操作系统：目支持 Ubuntu18.x 部署此脚本  
 硬件配置：最低1核1G，40G系统盘空间，否则无法运行
 
+更多查看官方网站 [安装要求](https://www.zabbix.com/documentation/4.0/zh/manual/installation/requirements)
+
 ## 组件
 
 包含的核心组件为：Zabbix, Apache, MariaDB, PHP
@@ -33,6 +35,8 @@
         dest: ~/zabbix.deb
       when: version=='latest'
 ```
+
+最新版本以及下载地址请查看官方[Download 页面](https://www.zabbix.com/download)
 
 ## 安装指南
 
