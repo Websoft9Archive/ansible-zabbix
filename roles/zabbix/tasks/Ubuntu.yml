@@ -1,23 +1,18 @@
 ---
 # 添加apt源
-- name: Dwonload zabbix.deb-LTS for ubuntu
-  get_url:
-    url: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
-    dest: ~/zabbix.deb
+- name: Install zabbix.deb-LTS for ubuntu
+  apt:
+    deb: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
+    update_cache: yes
+    autoremove: yes
   when: version=='LTS'
 
-- name: Download zabbix.deb-latest for ubuntu
-  get_url:
-    url: https://repo.zabbix.com/zabbix/4.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.2-1+bionic_all.deb
-    dest: ~/zabbix.deb
-  when: version=='latest'
-
-- name: Install zabbix.deb
-  command: dpkg -i ~/zabbix.deb
-
-- name: update cache
+- name: Install zabbix.deb-latest for ubuntu
   apt:
+    deb: https://repo.zabbix.com/zabbix/4.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.2-1+bionic_all.deb
     update_cache: yes
+    autoremove: yes
+  when: version=='latest'
 
 # 安装
 - name: Install zabbix-server-mysql zabbix-frontend-php zabbix-agent
@@ -138,6 +133,16 @@
     dest: /credentials/password.txt
     mode: 0644
 
+# 中文环境
+- name: locale-gen zh_CN.UTF-8
+  shell: locale-gen zh_CN.UTF-8
+
+- name: restart apache2
+  service:
+    name: apache2
+    state: restarted
+    enabled: yes
+
 # 软链接
 - name: Create /data/config
   file: 
@@ -185,8 +190,5 @@
 # 删除多余文件
 - name: delete extra files
   file:
-    path: /root/{{item}}
+    path: /root/user_policy.txt
     state: absent
-  with_items:
-    - zabbix.deb
-    - user_policy.txt
