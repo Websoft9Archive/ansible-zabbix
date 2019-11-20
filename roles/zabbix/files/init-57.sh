@@ -18,8 +18,8 @@ sed -i "s/DBPassword=${old_password}/DBPassword=${zabbix_password}/g" /etc/zabbi
 sed -i "s/DBPassword=${old_password}/DBPassword=${zabbix_password}/g" /etc/zabbix/web/zabbix.conf.php
 systemctl restart zabbix-server
 
-sed -i "s/${old_password}/${zabbix_password}/g" /credentials/password.txt
-sed -i "s/${old_password}/${zabbix_password}/g" /credentials/password.txt
+sed -i "s/MySQL password:${old_password}/MySQL password:${new_root_password}/g" /credentials/password.txt
+sed -i "s/database password:${old_password}/database password:${zabbix_password}/g" /credentials/password.txt
 
 sed -i "s/\/root\/init.sh//" /etc/rc.local
 rm -rf /root/init.sh /root/changepass.txt
