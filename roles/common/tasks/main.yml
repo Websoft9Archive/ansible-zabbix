@@ -1,3 +1,7 @@
+- name: Check Cloud
+  shell: echo "{{ansible_kernel}}" | awk -F '-' '{print $3}'
+  register: cloud
+
 # Centos 更新 安装基础软件工具等操作
 - block:
   - name: System Upgrade
@@ -67,7 +71,7 @@
         line: "/mnt/swap swap swap defaults 0 0"
         state: present
 
-  when: (ansible_swaptotal_mb == 0) and (cloud != 'azure')
+  when: (ansible_swaptotal_mb == 0) and (cloud.stdout != 'azure')
 
 - block:
   - name: ResourceDisk EnableSwap
@@ -83,14 +87,13 @@
       regexp: 'ResourceDisk.SwapSizeMB=0'
       line: "ResourceDisk.SwapSizeMB=2048"
       state: present
-  when: cloud == 'azure'
+  when: cloud.stdout == 'azure'
 
 
 - name: Set swapiness
   sysctl:
     name: vm.swappiness
     value: "10"
-
 
 - name: Fix No space left on device
   sysctl:
@@ -102,26 +105,19 @@
     apt:
       name: ec2-instance-connect
       update_cache: yes
+    when: ansible_distribution == 'Ubuntu'
 
-  - name: Start ec2-instance-connect
-    service:
-      name: ec2-instance-connect
-      state: started
-      enabled: yes
-  when: cloud == 'aws' and ansible_distribution == 'Ubuntu'
-
-- block:
   - name: AWS Configure
     yum:
       name: ec2-instance-connect
+    when: ansible_distribution == 'Centos'
   
   - name: Start ec2-instance-connect
     service:
       name: ec2-instance-connect
       state: started
       enabled: yes
-
-  when: cloud == 'aws' and ansible_distribution == 'Centos'
+  when: cloud.stdout == 'aws'
 
 - name: Create Dir
   file:

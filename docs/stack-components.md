@@ -1,62 +1,120 @@
-# List Included Components
+# Parameters
 
+<<<<<<< HEAD
 Zabbix 预装包包含 Zabbix 运行所需一序列支撑软件（简称为“组件”），下面列出主要组件名称、安装路径、配置文件地址、端口、版本等重要的信息。
+=======
+The Zabbix deployment package contains a sequence software (referred to as "components") required for Zabbix to run. The important information such as the component name, installation directory path, configuration file path, port, version, etc. are listed below.
+>>>>>>> 07ead7fdea7c6e2a4c1c43fdc95d2b0273206c64
 
-## 路径
+## Path
 
 ### Zabbix
 
+<<<<<<< HEAD
 Zabbix 安装目录： */opt/Zabbix/*  
 Zabbix 配置文件： */etc/zabbix/zabbix_server.conf*  
 Zabbix 数据目录： */opt/Zabbix/data*  
 Zabbix 日志目录： */var/log/zabbix/zabbix_server.log*
+=======
+Zabbix installation directory: */data/wwwroot/Zabbix*  
+Zabbix configuration file: */data/wwwroot/prestashop/app/config/parameters.php*  
+>>>>>>> 07ead7fdea7c6e2a4c1c43fdc95d2b0273206c64
 
-> Metabase 配置文件中包含数据库连接信息，更改了 MySQL 数据库账号密码，此处也需要对应修改
+### PHP
 
-### Go
+PHP configuration file: */etc/php.ini*  
+PHP Modules configurations directory: */etc/php.d*
 
+<<<<<<< HEAD
 Zabbix 使用 Go 语言开发，镜像默认支持 Go 程序部署
+=======
+### Apache
+
+Zabbix on LAMP, the Web Server is Apache  
+
+Apache vhost configuration file: */etc/httpd/conf.d/vhost.conf*    
+Apache main configuration file: */etc/httpd/conf/httpd.conf*   
+Apache logs file: */var/log/httpd*  
+Apache module configuration file: */etc/httpd/conf.modules.d/00-base.conf*    
+>>>>>>> 07ead7fdea7c6e2a4c1c43fdc95d2b0273206c64
 
 ### Nginx
 
-Nginx 虚拟主机配置文件：*/etc/nginx/conf.d/default.conf*  
-Nginx 主配置文件： */etc/nginx/nginx.conf*  
-Nginx 日志文件： */var/log/nginx/*
+Zabbix on LEMP, the Web Server is Nginx    
+
+Nginx vhost configuration file: */etc/nginx/sites-available/default.conf*  
+Nginx main configuration file: */etc/nginx/nginx.conf*  
+Nginx logs file: */var/log/nginx/*
 
 ### MYSQL
 
-MySQL 安装路径: */usr/local/mysql*  
-MySQL 数据文件 */data/mysql*  
-MySQL 配置文件: */etc/my.cnf*    
-MySQL 可视化管理地址: *http://服务器公网IP:9090*，用户名和密码请见 [账号密码](/zh/stack-accounts.md) 章节。
+MySQL installation directory: */usr/local/mysql*  
+MySQL data directory: */data/mysql*  
+MySQL configuration file: */etc/my.cnf*    
+MySQL Web Management URL: *http://Internet IP/phpmyadmin*, [get credential](/stack-accounts.md)
 
+### phpMyAdmin
 
-## 端口号
+phpMyAdmin installation directory: */data/apps/phpmyadmin*  
+phpMyAdmin configuration file: */data/apps/phpmyadmin/config.inc.php*   
+phpMyAdmin vhost configuration file: */etc/httpd/conf.d/phpMyAdmin.conf* or */etc/nginx/php.conf*  
 
-下面是您在使用本镜像过程中，需要用到的端口号，请通过 [云控制台安全组](https://support.websoft9.com/docs/faq/zh/tech-instance.html)进行设置
+### Redis
 
-| 名称 | 端口号 | 用途 |  必要性 |
+Redis configuration file: */etc/redis.conf*  
+Redis data directory: */var/lib/redis*  
+Redis logs file: */var/log/redis/redis.log*
+
+## Ports
+
+You can control(open or shut down) ports by **[Security Group Setting](https://support.websoft9.com/docs/faq/zh/tech-instance.html)** of your Cloud Server whether the port can be accessed from Internet.
+
+These ports should be opened for this application:
+
+| Name | Number | Use |  Necessity |
 | --- | --- | --- | --- |
-| MySQL | 3306 | 远程连接MySQL | 可选 |
-| HTTP | 80 | 通过http访问Metabase | 必须 |
-| HTTPS | 443 | 通过https访问Metabase | 可选 |
-| phpMyAdmin on Docker | 9090 | 可视化管理MySQL | 可选 |
+| MySQL | 3306 | Remote connect MySQL | Optional |
+| HTTP | 80 | HTTP requests for Zabbix | Required |
+| HTTPS | 443 | HTTPS requests Zabbix | Optional |
 
-## 版本号
+## Version
 
-组件版本号可以通过云市场商品页面查看。但部署到您的服务器之后，组件会自动进行更新导致版本号有一定的变化，故精准的版本号请通过在服务器上运行命令查看：
+You can see the version from product page of Marketplace. However, after being deployed to your server, the components will be automatically updated, resulting in a certain change in the version number. Therefore, the exact version number should be viewed by running the command on the server:
 
 ```shell
+<<<<<<< HEAD
 # Zabbix version
 cd /opt/Zabbix/bin
 ./Zabbix version
+=======
+# Linux Version
+lsb_release -a
+>>>>>>> 07ead7fdea7c6e2a4c1c43fdc95d2b0273206c64
 
-# Nginx version:
+# PHP Version
+php -v
+
+# List Installed PHP Modules
+php -m
+
+# Apache version on Centos
+httpd -v
+
+# Apache version on Ubuntu
+apache2 -v
+
+# List Installed Apache Modules
+apachectl -M
+
+# Nginx version
 nginx -v
+
+# List Installed Nginx Modules
+nginx -V
 
 # MySQL version:
 mysql -V
 
-# Dokcer:
-docker --version
+# Redis version
+redis-server -v
 ```
