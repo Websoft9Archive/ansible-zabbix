@@ -16,6 +16,7 @@ echo -e 'Database username: root \nDatabase password:'$root_password  > /credent
 echo -e 'Database username: zabbix \nDatabase password:'$zabbix_password  >> /credentials/password.txt
 
 sed -i "s/DBPassword=${old_password}/DBPassword=${zabbix_password}/g" /etc/zabbix/zabbix_server.conf
+sed -i "s/DBPassword=${old_password}/DBPassword=${zabbix_password}/g" /etc/zabbix/web/zabbix.conf.php
 systemctl restart zabbix-server
 
 sed -i "s/\/root\/init.sh//" /etc/rc.local

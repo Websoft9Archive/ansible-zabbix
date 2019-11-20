@@ -1,21 +1,21 @@
 # List Included Components
 
-Mattermost 预装包包含 Mattermost 运行所需一序列支撑软件（简称为“组件”），下面列出主要组件名称、安装路径、配置文件地址、端口、版本等重要的信息。
+Zabbix 预装包包含 Zabbix 运行所需一序列支撑软件（简称为“组件”），下面列出主要组件名称、安装路径、配置文件地址、端口、版本等重要的信息。
 
 ## 路径
 
-### Mattermost
+### Zabbix
 
-Mattermost 安装目录： */opt/mattermost/*  
-Mattermost 配置文件： */opt/mattermost/config/config.json*  
-Mattermost 数据目录： */opt/mattermost/data*  
-Mattermost 日志目录： */opt/mattermost/logs*
+Zabbix 安装目录： */opt/Zabbix/*  
+Zabbix 配置文件： */etc/zabbix/zabbix_server.conf*  
+Zabbix 数据目录： */opt/Zabbix/data*  
+Zabbix 日志目录： */var/log/zabbix/zabbix_server.log*
 
 > Metabase 配置文件中包含数据库连接信息，更改了 MySQL 数据库账号密码，此处也需要对应修改
 
 ### Go
 
-Mattermost 使用 Go 语言开发，镜像默认支持 Go 程序部署
+Zabbix 使用 Go 语言开发，镜像默认支持 Go 程序部署
 
 ### Nginx
 
@@ -47,9 +47,9 @@ MySQL 可视化管理地址: *http://服务器公网IP:9090*，用户名和密�
 组件版本号可以通过云市场商品页面查看。但部署到您的服务器之后，组件会自动进行更新导致版本号有一定的变化，故精准的版本号请通过在服务器上运行命令查看：
 
 ```shell
-# mattermost version
-cd /opt/mattermost/bin
-./mattermost version
+# Zabbix version
+cd /opt/Zabbix/bin
+./Zabbix version
 
 # Nginx version:
 nginx -v
