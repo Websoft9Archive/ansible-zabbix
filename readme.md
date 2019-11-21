@@ -23,13 +23,13 @@
 
 ```
     # 添加apt源
-    - name: Dwonload zabbix.deb-LTS for ubuntu
+    - name: Download zabbix.deb-LTS for ubuntu
       get_url:
         url: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
         dest: ~/zabbix.deb
       when: version=='LTS'
 
-    - name: Dwonload zabbix.deb-latest for ubuntu
+    - name: Download zabbix.deb-latest for ubuntu
       get_url:
         url: https://repo.zabbix.com/zabbix/4.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.2-1+bionic_all.deb
         dest: ~/zabbix.deb
