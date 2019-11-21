@@ -2,52 +2,45 @@
 
 These commands you must know when you using the Zabbix of Websoft9
 
+### Zabbix-Server
+
+```shell
+systemctl start zabbix-server
+systemctl restart zabbix-server
+systemctl stop zabbix-server
+systemctl status zabbix-server
+```
+
+### Zabbix-Agent
+
+```shell
+systemctl start zabbix-agent
+systemctl restart zabbix-agent
+systemctl stop zabbix-agent
+systemctl status zabbix-agent
+```
+
 ### Apache
 
 ```shell
-#For Centos&Redhat
-sudo systemctl start httpd
-sudo systemctl stop httpd
-sudo systemctl restart httpd
-sudo systemctl status httpd
-
-#For Ubuntu&Debian
+##For Ubuntu&Debian
 sudo systemctl start apache2
 sudo systemctl stop apache2
 sudo systemctl restart apache2
 sudo systemctl status apache2
+
+##For Centos&Redhat
+sudo systemctl start httpd
+sudo systemctl stop httpd
+sudo systemctl restart httpd
+sudo systemctl status httpd
 ```
 
-### Nginx
-
-```shell
-sudo systemctl start nginx
-sudo systemctl stop nginx
-sudo systemctl restart nginx
-sudo systemctl status nginx
-```
-
-### PHP-FPM
-```shell
-systemctl start php-fpm
-systemctl stop php-fpm
-systemctl restart php-fpm
-systemctl status php-fpm
-```
-
-### MySQL
+### MariaDB
 
 ```shell
 sudo systemctl start mysql
 sudo systemctl stop mysql
 sudo systemctl restart mysql
 sudo systemctl status mysql
-```
-
-### Redis
-```shell
-sudo systemctl star redis
-sudo systemctl stop redis
-sudo systemctl restart redis
-sudo systemctl status redis
 ```

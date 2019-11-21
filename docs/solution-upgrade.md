@@ -16,36 +16,29 @@ For Zabbix maintenance, focus on the following two Update & Upgrade jobs
 Run an update command to complete the system update:
 
 ``` shell
-#For Centos&Redhat
-yum update -y
-
 #For Ubuntu&Debian
 apt update && apt upgrade -y
+
+#For Centos&Redhat
+yum update -y
 ```
 > This deployment package is preconfigured with a scheduled task for automatic updates. If you want to remove the automatic update, please delete the corresponding Cron
 
+## Zabbix Update
+
+It is very easy for updating Zabbix(e.g. 4.0.1 to 4.0.3):
+
+```
+## update all Zabbix components
+sudo apt install --only-upgrade 'zabbix.*'
+
+## update Zabbix server
+sudo apt install --only-upgrade 'zabbix-server.*'
+
+## update Zabbix agent 
+sudo apt install --only-upgrade 'zabbix-agent.*'
+```
+
 ## Zabbix Upgrade
 
-Installing the module 【1-Click Upgrade】for Zabbix upgrading online
-
-1. Log in Zabbix console, open【Modules Catalog】, search the module【upgrade】 and install it
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/prestashop/prestashop-upgrade001-websoft9.png)
-2. Set it when you have completed the installation of this module
-3. Set your Zabbix to [maintenance mode](/solution-more.md#prestashop-maintenance-mode)
-4. Click【Upgrade Zabbix now】 to start upgrading
-   ![](http://libs.websoft9.com/Websoft9/DocsPicture/en/prestashop/prestashop-checkupgrade-websoft9.png)
-5. The latest installation package will be downloaded first during the upgrade. Due to network factors, this process may be slow.
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/prestashop/prestashop-upgrade003-websoft9.png)
-6. Exceptions to the upgrade process
-   - If you can't complete this step to download a new version, you need to try multiple times.
-   - May get the error “you don't have permission...ajax-upgradetab.php”
-
-> More upgrade details please refer to: [Zabbix Upgrade](http://doc.prestashop.com/display/PS16/Manual+update)
-
-## Zabbix Module Upgrade
-
-Zabbix can upgrade the Module online
-
-1. Log in Zabbix as administrator, open【Modules Catalog】
-2. Find the module you need to upgrade, click the 【Upgrade】 button
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/prestashop/prestashop-upgrademodules-websoft9.png)
+Zabbix upgrade(e.g. 3.0 to 4.0) is difficult than update, more upgrade details please refer to official documentation: [Zabbix Upgrade](https://www.zabbix.com/documentation/4.0/zh/manual/installation/upgrade)

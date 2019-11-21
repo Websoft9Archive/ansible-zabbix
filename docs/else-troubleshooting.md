@@ -4,12 +4,6 @@ We collect the most common troubleshooting of using Zabbix for your reference:
 
 > Many troubleshooting is closely related to the Server, if you can confirm troubleshooting is related to Cloud Platform, please refer to [Cloud Platform Documentation](https://support.websoft9.com/docs/faq/tech-instance.html)
 
-#### Zabbix Redirects Error
-
-When add new language for Zabbix, it will add redirects rules in the  `.htaccess` file of Zabbix root directory.
-
-Check your `.htaccess` file in your application root directory, make sure there not any cycle redirects settings
-
 #### Database service could not be started?
 
 Insufficient disk space, insufficient memory, and configuration file errors can make database service could not be started  
@@ -27,22 +21,5 @@ df -lh
 free -lh
 ```
 
-#### phpMyAdmin page access blank?
-
-Please try another browser, such as chrome or firefox. If the phpMyAdmin can be opened normally before, and now appears to be incomplete or blank, it is recommended to clean up the browser cache, cookies and other information
-
-#### PhpMyAdmin Timeout Errors
-
-If you try to import a zipped database, you might see a timeout error because phpMyAdmin takes too long to execute the script.To fix this:
-
-- Set the max_execution_time of `php.ini` to larger value
-- Try to import the file again.
-
-Remember to change the ExecTimeLimit setting back to its original value once the import process ends.
-
-#### Website pictures loading very slowly?
-
-Please make sure that your brandwith of Server is more than 5M
-
 #### Apache httpd service restart error
-Please make sure the vhost.conf is correct for you, and you can track and analyze log files from */var/log/httpd*
+Please make sure the vhost.conf is correct for you, and you can track and analyze log files

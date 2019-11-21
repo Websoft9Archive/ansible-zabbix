@@ -11,12 +11,12 @@
 Zabbix 域名绑定操作步骤：
 
 1. 使用 SFTP 工具登录云服务器
-2. 修改 [虚拟机主机配置文件](/zh/stack-components.html#apache)，将其中的域名相关的值
+2. 修改 [虚拟机主机配置文件](/zh/stack-components.md#apache)，将其中的域名相关的值
    ```text
      <VirtualHost *:80>
      ServerName www.example.com # 修改成您的实际域名
    ```
-3. 保存配置文件，[重启 Apache 服务](/zh/admin-services.html#apache)
+3. 保存配置文件，[重启 Apache 服务](/zh/admin-services.md#apache)
 
 ## Zabbix 多语言
 
