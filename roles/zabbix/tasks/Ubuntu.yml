@@ -2,14 +2,14 @@
 # 添加apt源，默认为 LTS 源，通过变量控制其他
 - name: Install zabbix.deb-LTS for ubuntu
   apt:
-    deb: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
+    deb: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-3+bionic_all.deb
     update_cache: yes
     autoremove: yes
   when: version=='LTS'
 
 - name: Install zabbix.deb-latest for ubuntu
   apt:
-    deb: https://repo.zabbix.com/zabbix/4.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.2-1+bionic_all.deb
+    deb: https://repo.zabbix.com/zabbix/4.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.4-1+bionic_all.deb
     update_cache: yes
     autoremove: yes
   when: version=='latest'
@@ -24,7 +24,7 @@
 - name: Change MySQL root user password
   mysql_user:
     login_user: root
-    login_password: '{{mysql_password}}'
+    login_password: ''
     name: root
     host: localhost
     password: '{{mysql_password}}'
@@ -34,7 +34,7 @@
     name: mysql
     state: restarted
 
-- name: Removes all any else user accounts
+- name: Removes all anonymous user accounts
   mysql_user:
     login_user: root
     login_password: "{{mysql_password}}"
@@ -88,7 +88,7 @@
 - name: Change zabbix_server.conf
   lineinfile:
     path: /etc/zabbix/zabbix_server.conf
-    regexp: '# DBPassword='
+    regexp: '# DBPassword=' 
     line: DBPassword={{mysql_password}}
 
 - name: Replace apache.conf
