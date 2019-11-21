@@ -1,5 +1,5 @@
 ---
-# 添加apt源
+# 添加apt源，默认为 LTS 源，通过变量控制其他
 - name: Install zabbix.deb-LTS for ubuntu
   apt:
     deb: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
@@ -14,7 +14,7 @@
     autoremove: yes
   when: version=='latest'
 
-# 安装
+# 安装Zabbix
 - name: Install zabbix-server-mysql zabbix-frontend-php zabbix-agent
   apt:
     name: [zabbix-server-mysql, zabbix-frontend-php, zabbix-agent]
@@ -106,13 +106,13 @@
     - zabbix-agent
     - apache2
 
-# Certbot
+# 安装 Certbot
 - name: Install certbot
   apt:
     name: [certbot, python-certbot-apache]
     state: latest
 
-# 密码文件
+# 服务器上创建密码目录以及文件
 - name: create /credentials
   file:
     path: /credentials
@@ -124,7 +124,7 @@
     dest: /credentials/password.txt
     mode: 0644
 
-# 中文环境
+# 操作系统中文编码处理，用于支持 Zabbix 中文语言
 - name: locale-gen zh_CN.UTF-8
   shell: locale-gen zh_CN.UTF-8
 
@@ -134,7 +134,7 @@
     state: restarted
     enabled: yes
 
-# 软链接
+# 软链接处理
 - name: Create /data/config
   file: 
     path: /data/config

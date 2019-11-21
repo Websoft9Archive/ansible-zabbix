@@ -49,17 +49,7 @@ Manual backup for application is based on the **Exporting source code and databa
 ```
 The general manual backup operation steps are as follows:
 
-1. Compress and download the entire */data/wwwroot/prestashop* directory by SFTP 
-2. Export Zabbix's database by [phpMyAdmin](/admin-mysql.md)
-   ![](http://libs.websoft9.com/Websoft9/DocsPicture/en/prestashop/prestashop-dbexport-websoft9.png)
+1. Compress and download the entire */etc/zabbix* directory by SFTP 
+2. Export Zabbix's database
 3. Put the source code file, data file and database file in the same folder, named according to the date
 4. Backup completed
-
-### Zabbix online backup
-
-This section provides Zabbix online database backup solution
-
-1. Log in Zabbix console as administrator
-2. Open【Advanced Parameters】>【DB backup】
-  ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/prestashop/prestashop-dbbackup-websoft9.png)
-3. Create a new backup and download it

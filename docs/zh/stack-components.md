@@ -8,10 +8,10 @@ Zabbix 预装包包含 Zabbix 运行所需一序列支撑软件（简称为“�
 
 ### Zabbix
 
-Zabbix 安装目录: /usr/share/zabbix  
-Zabbix 配置文件: /usr/share/zabbix/conf/zabbix.conf.php  
-Zabbix-Agent 日志文件：/var/log/zabbix/zabbix_agentd.log   
-Zabbix-Server 日志文件：/var/log/zabbix/zabbix_server.log
+Zabbix 安装目录: */usr/share/zabbix*  
+Zabbix 配置文件: */usr/share/zabbix/conf/zabbix.conf.php*    
+Zabbix-Agent 日志文件：*/var/log/zabbix/zabbix_agentd.log*     
+Zabbix-Server 日志文件：*/var/log/zabbix/zabbix_server.log*  
 
 > Zabbix 配置文件中包含数据库连接信息，更改了 MySQL 数据库账号密码，此处也需要对应修改
 

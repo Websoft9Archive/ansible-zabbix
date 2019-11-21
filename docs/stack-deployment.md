@@ -13,7 +13,7 @@ We offer two deployment Zabbix scenarios (the deployment results are the same):
 
 For users with experience with cloud servers, Deploy by Image equated with "one-click deployment".
 
-Websoft9 published [Zabbix image](https://apps.websoft9.com/prestashop) on Cloud Platform, three methods for your deployment:
+Websoft9 published [Zabbix image](https://apps.websoft9.com/zabbix) on Cloud Platform, three methods for your deployment:
 
 * When **Create New Instance** , select the Zabbix image as the system boot template.
 * When **Subscribe Zabbix** on Marketplace, the system will promote you to create a new instance for this image at the same time.
@@ -23,7 +23,7 @@ Websoft9 published [Zabbix image](https://apps.websoft9.com/prestashop) on Cloud
 
 **Deploy by Script** means running a script on your cloud instance to pull the pre-packages online to your instance and configure it at the same time.
 
-Websoft9 provide the [Zabbix ansbile automation script](https://github.com/Websoft9/ansible-prestashop) on Github. If you are familiar with Ansible, you can deploy the Zabbix to the instance automaticly.
+Websoft9 provide the [Zabbix ansbile automation script](https://github.com/Websoft9/ansible-zabbix) on Github. If you are familiar with Ansible, you can deploy the Zabbix to the instance automaticly.
 
 ## Comparison
 

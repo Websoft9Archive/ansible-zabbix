@@ -36,6 +36,8 @@
       when: version=='latest'
 ```
 
+本项目默认安装 LTS 版本，安装 latest 版本请通过 ansible 变量控制：`version=latest`  
+
 最新版本以及下载地址请查看官方[Download 页面](https://www.zabbix.com/download)
 
 ## 安装指南
@@ -43,7 +45,7 @@
 以 root 用户登录 Linux，运行下面的**命令脚本**即可启动自动化部署，然后耐心等待，直至安装成功。
 
 ```
-# coming soon
+wget https://raw.githubusercontent.com/Websoft9/linux/master/ansible_script/install.py ; python install.py zabbix https://github.com/Websoft9/ansible-zabbix.git
 ```  
 
 注意：  
