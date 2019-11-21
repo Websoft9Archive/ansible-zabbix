@@ -13,7 +13,7 @@
 
 ## 组件
 
-包含的核心组件为：Zabbix, Apache, MariaDB, PHP
+包含的核心组件为：Zabbix, Apache, MariaDB , PHP
 
 更多请见[参数表](/docs/zh/stack-components.md)
 
@@ -22,18 +22,18 @@
 本项目采用官方提供的 Zabbix 二进制安装包安装方式（适合于生产环境），不同的 Zabbix 版本的下载地址不一样，因此需要不定期以修改`/roles/zabbix/tasks/ubuntu.yml`文件中对应的下载地址以保证为最新版本
 
 ```
-    # 添加apt源
-    - name: Dwonload zabbix.deb-LTS for ubuntu
-      get_url:
+ # 添加apt源
+ - name: Download zabbix.deb-LTS for ubuntu
+    get_url:
         url: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
         dest: ~/zabbix.deb
-      when: version=='LTS'
+    when: version=='LTS'
 
-    - name: Dwonload zabbix.deb-latest for ubuntu
-      get_url:
+  - name: Download zabbix.deb-latest for ubuntu
+     get_url:
         url: https://repo.zabbix.com/zabbix/4.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.2-1+bionic_all.deb
         dest: ~/zabbix.deb
-      when: version=='latest'
+    when: version=='latest'
 ```
 
 本项目默认安装 LTS 版本，安装 latest 版本请通过 ansible 变量控制：`version=latest`  
