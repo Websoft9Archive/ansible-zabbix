@@ -29,21 +29,12 @@
     host: localhost
     password: '{{mysql_password}}'
 
-- name: change user's plugin -1
-  copy:
-    src: user_policy.txt
-    dest: /root/user_policy.txt
-    mode: 0644
-
-- name: change user's plugin -2
-  shell: mysql -uroot -p{{mysql_password}} < /root/user_policy.txt
-
 - name: restart mariadb
   service:
     name: mysql
     state: restarted
 
-- name: Removes all anyelse user accounts
+- name: Removes all any else user accounts
   mysql_user:
     login_user: root
     login_password: "{{mysql_password}}"
