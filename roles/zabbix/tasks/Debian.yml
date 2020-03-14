@@ -1,0 +1,185 @@
+---
+# 添加apt源，默认为 LTS 源，通过变量控制其他
+- name: Install zabbix.deb-LTS for ubuntu
+  apt:
+    deb: "{{zabbix_download_url[ansible_os_family].lts}}"
+    update_cache: yes
+    autoremove: yes
+  when: zabbix_version=='LTS'
+
+- name: Install zabbix.deb-latest for ubuntu
+  apt:
+    deb: "{{zabbix_download_url[ansible_os_family].latest}}"
+    update_cache: yes
+    autoremove: yes
+  when: zabbix_version=='latest'
+
+# 安装Zabbix
+- name: Install zabbix-server-mysql zabbix-frontend-php zabbix-agent
+  apt:
+    name: [zabbix-server-mysql, zabbix-frontend-php, zabbix-agent]
+    state: latest
+
+# 配置数据库
+- name: Change MySQL root user password
+  mysql_user:
+    login_user: root
+    login_password: ''
+    name: root
+    host: localhost
+    password: '{{mysql_root_password}}'
+
+- name: restart mariadb
+  service:
+    name: mysql
+    state: restarted
+
+- name: Removes all anonymous user accounts
+  mysql_user:
+    login_user: root
+    login_password: "{{mysql_root_password}}"
+    name: ''
+    host_all: yes
+    state: absent
+
+- name: Remove hostname user accounts
+  mysql_user: login_user=root login_password={{mysql_root_password}} name='root' host={{ ansible_nodename }} state=absent
+
+- name: Removes test Databases
+  mysql_db:
+    login_user: root
+    login_password: "{{mysql_root_password}}"
+    name: test
+    state: absent
+
+- name: Removing privileges on test database
+  command: mysql -uroot -p{{mysql_root_password}} -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
+
+- name: Create a new database with name 'zabbix'
+  mysql_db:
+    login_user: root
+    login_password: "{{mysql_root_password}}"
+    name: zabbix
+    encoding: utf8
+    collation: utf8_bin
+    state: present
+
+- name: Create database user with name 'zabbix' and password with all database privileges
+  mysql_user:
+    login_user: root
+    login_password: "{{mysql_root_password}}"
+    name: zabbix
+    password: "{{mysql_root_password}}"
+    priv: 'zabbix.*:ALL'
+    state: present
+
+- name: unarchive data.sql.gz
+  command: gzip -d /usr/share/doc/zabbix-server-mysql/create.sql.gz
+
+- name: Restore database fot LTS version
+  mysql_db:
+    login_user: zabbix
+    login_password: "{{mysql_root_password}}"
+    name: zabbix
+    state: import
+    target: /usr/share/doc/zabbix-server-mysql/create.sql
+
+# 配置 zabbix 以及 apache
+- name: Change zabbix_server.conf
+  lineinfile:
+    path: /etc/zabbix/zabbix_server.conf
+    regexp: '# DBPassword=' 
+    line: DBPassword={{mysql_root_password}}
+
+- name: Replace apache.conf
+  template:
+    src: apache.conf
+    dest: /etc/zabbix/apache.conf
+
+- name: Restart service
+  service:
+    name: "{{item}}"
+    state: restarted
+    enabled: yes
+  with_items:
+    - zabbix-server
+    - zabbix-agent
+    - apache2
+
+# 安装 Certbot
+- name: Install certbot
+  apt:
+    name: [certbot, python-certbot-apache]
+    state: latest
+
+# 服务器上创建密码目录以及文件
+- name: create /credentials
+  file:
+    path: /credentials
+    state: directory
+
+- name: Create Password.txt
+  template:
+    src: password.txt.j2
+    dest: /credentials/password.txt
+    mode: 0644
+
+# 操作系统中文编码处理，用于支持 Zabbix 中文语言
+- name: locale-gen zh_CN.UTF-8
+  shell: locale-gen zh_CN.UTF-8
+
+- name: restart apache2
+  service:
+    name: apache2
+    state: restarted
+    enabled: yes
+
+# 软链接处理
+- name: Create /data/config
+  file: 
+    path: /data/config
+    state: directory
+
+- name: Create symbolic link
+  file:
+    src: /etc/zabbix
+    dest: /data/config/zabbix
+    state: link
+    force: yes
+
+- name: systemctl update
+  apt:
+    name: "*"
+    state: latest
+
+# 设置随机密码
+- name: Databases Random Password
+  copy:
+    src: init-57.sh
+    dest: /root/init.sh
+    mode: 0750
+
+- name: touch rc.local
+  file:
+    path: /etc/rc.local
+    state: touch
+    mode: 0750
+
+- name: Write rc.local
+  shell: echo "#!/bin/bash" > /etc/rc.local
+
+- name: restart rc.local
+  service: name=rc.local state=restarted enabled=yes
+
+- name: Setting Startup
+  lineinfile:
+    path: /etc/rc.local
+    regexp: '/root/init.sh'
+    line: '/root/init.sh'
+    mode: 0750
+
+# 删除多余文件
+- name: delete extra files
+  file:
+    path: /root/user_policy.txt
+    state: absent

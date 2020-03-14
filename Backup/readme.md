@@ -6,20 +6,14 @@
 
 ## 配置要求
 
-安装本项目，确保符合如下的条件：
-
-| 条件       | 详情       | 备注  |
-| ------------ | ------------ | ----- |
-| 操作系统       | Ubuntu18.04       |   |
-| 公有云| AWS, Azure, 阿里云, 华为云, 腾讯云 | 可选 |
-| 私有云|  KVM, VMware, VirtualBox, OpenStack | 可选 |
-| 服务器配置 | 最低1核1G，安装时所需的带宽不低于10M |  建议采用按量100M带宽 |
+操作系统：目支持 Ubuntu18.x 部署此脚本  
+硬件配置：最低1核1G，40G系统盘空间，否则无法运行
 
 更多查看官方网站 [安装要求](https://www.zabbix.com/documentation/4.0/zh/manual/installation/requirements)
 
 ## 组件
 
-包含的核心组件为：Zabbix + Apache + MariaDB + PHP
+包含的核心组件为：Zabbix, Apache, MariaDB , PHP
 
 更多请见[参数表](/docs/zh/stack-components.md)
 

@@ -1,24 +1,32 @@
 ---
-# # 服务器前置任务(ubuntu使用)
-- name: Pre_tasks for Ubuntu
-  hosts: all
-  become: yes
-  become_method: sudo
-  gather_facts: False
-  pre_tasks:
-   - name: Install Python
-     raw: sudo apt update && sudo apt-get -y install python
-     ignore_errors: True
-
-
-# # 核心任务
+# 核心任务
 
 - name: Zabbix
   hosts: all
   become: yes
   become_method: sudo
 
+  vars_files:
+    - /vars/main.yml
+
+  vars_prompt:
+    - name: 'zabiix_version_selection'
+      prompt: "\nWhich Web-Server do you want to use? [ 1/2 ] \n\n
+      1: Long Time Support Verison\n
+      2: Latest Version\n"
+      private: no
+      default: 1
+
+  vars: 
+    zabbix_version_select:
+      '1': 'LTS'
+      '2': 'latest'
+
+    zabbix_version: "{{zabbix_version_select[zabbix_version_selection]}}" 
+
   roles:
-    - { role: common, tags: "common"}      
+    - { role: role_common, tags: "role_common"} 
+    - { role: role_cloud, tags: "role_cloud" }     
     - { role: zabbix, tags: "zabbix"}
-    - { role: end, tags: "end"}
+    - { role: role_preend, preend_certbot: True, tags: "role_preend"}
+    - { role: role_end, tags: "role_end"}
