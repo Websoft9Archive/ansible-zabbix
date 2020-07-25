@@ -16,3 +16,17 @@ mysql_users:
  - name: zabbix
    host: localhost
    priv: 'zabbix.*:ALL'
+   
+init_db: 
+  mysql:
+    admin: root
+    users: ["zabbix"]
+    password: "123456"  
+    
+init_application:
+  zabbix:
+    username: Admin
+    password: "zabbix"
+    service_after: mysql.service
+    commands: 
+      - update users set passwd=md5('$new_password') where name='Zabbix' | mysql -uroot -p123456
