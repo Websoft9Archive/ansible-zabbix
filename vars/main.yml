@@ -1,0 +1,14 @@
+common_os_support: ["CentOS", "Ubuntu"]
+mysql_version: "5.7"
+mysql_root_password: "123456"
+
+mysql_databases:
+ - name: zabbix
+   encoding: utf8
+   collation: utf8_bin
+ 
+mysql_users:
+ - name: zabbix
+   host: localhost
+   priv: 'zabbix.*:ALL'
+

@@ -1,6 +1,4 @@
 ---
-# 核心任务
-
 - name: Zabbix
   hosts: all
   become: yes
@@ -12,21 +10,27 @@
   vars_prompt:
     - name: 'zabiix_version_selection'
       prompt: "\nWhich Web-Server do you want to use? [ 1/2 ] \n\n
-      1: Long Time Support Verison\n
-      2: Latest Version\n"
+      1: 5.0\n
+      2: 4.4\n
+      3: 4.0\n"
       private: no
       default: 1
 
   vars: 
     zabbix_version_select:
-      '1': 'LTS'
-      '2': 'latest'
+      '1': '5.0'
+      '2': '4.4'
+      '3': '4.0'
 
     zabbix_version: "{{zabbix_version_select[zabbix_version_selection]}}" 
+    zabbix_db_root_password: "{{mysql_root_password}}"
 
   roles:
     - { role: role_common, tags: "role_common"} 
-    - { role: role_cloud, tags: "role_cloud" }     
+    - { role: role_cloud, tags: "role_cloud" }
+    - { role: role_apache, tags: "role_apache" }
+    - { role: role_mysql, tags: "role_mysql" }
     - { role: zabbix, tags: "zabbix"}
-    - { role: role_preend, preend_certbot: True, tags: "role_preend"}
+    - { role: role_init_password, tags: "role_init_password"}
+    - { role: role_preend, tags: "role_preend"}
     - { role: role_end, tags: "role_end"}

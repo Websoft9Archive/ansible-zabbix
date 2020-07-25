@@ -1,5 +1,73 @@
+# Install by OS_family
 - include: "{{ansible_os_family}}.yml"
 
+# Import database
+- name: unarchive data.sql.gz
+  command: gzip -d /usr/share/doc/zabbix-server-mysql/create.sql.gz
+
+- name: Restore database
+  mysql_db:
+    login_user: zabbix
+    login_password: "{{zabbix_db_root_password}}"
+    name: zabbix
+    state: import
+    target: /usr/share/doc/zabbix-server-mysql/create.sql
+
+# Configure Zabbix
+- name: Change zabbix_server.conf
+  lineinfile:
+    path: /etc/zabbix/zabbix_server.conf
+    regexp: '# DBPassword=' 
+    line: DBPassword={{zabbix_db_root_password}}
+
+- name: Replace apache.conf
+  template:
+    src: apache.conf
+    dest: /etc/zabbix/apache.conf
+
+- name: Restart service
+  service:
+    name: "{{item}}"
+    state: restarted
+    enabled: yes
+  with_items:
+    - zabbix-server
+    - zabbix-agent
+    - apache2
+
+# 操作系统中文编码处理，用于支持 Zabbix 中文语言
+- name: locale-gen zh_CN.UTF-8
+  shell: locale-gen zh_CN.UTF-8
+
+- name: restart apache2
+  service:
+    name: apache2
+    state: restarted
+    enabled: yes
+
+# 软链接处理
+- name: Create /data/config
+  file: 
+    path: /data/config
+    state: directory
+
+- name: Create symbolic link
+  file:
+    src: /etc/zabbix
+    dest: /data/config/zabbix
+    state: link
+    force: yes
+
+- name: systemctl update
+  apt:
+    name: "*"
+    state: latest
+
+# 删除多余文件
+- name: delete extra files
+  file:
+    path: /root/user_policy.txt
+    state: absent
 
 
 

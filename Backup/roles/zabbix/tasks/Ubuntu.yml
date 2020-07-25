@@ -1,18 +1,17 @@
----
 # 添加apt源，默认为 LTS 源，通过变量控制其他
 - name: Install zabbix.deb-LTS for ubuntu
   apt:
-    deb: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-3+bionic_all.deb
+    deb: "{{zabbix_download_url[ansible_os_family].lts}}"
     update_cache: yes
     autoremove: yes
-  when: version=='LTS'
+  when: zabbix_version=='LTS'
 
 - name: Install zabbix.deb-latest for ubuntu
   apt:
-    deb: https://repo.zabbix.com/zabbix/4.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.4-1+bionic_all.deb
+    deb: "{{zabbix_download_url[ansible_os_family].latest}}"
     update_cache: yes
     autoremove: yes
-  when: version=='latest'
+  when: zabbix_version=='latest'
 
 # 安装Zabbix
 - name: Install zabbix-server-mysql zabbix-frontend-php zabbix-agent
@@ -27,7 +26,7 @@
     login_password: ''
     name: root
     host: localhost
-    password: '{{mysql_password}}'
+    password: '{{mysql_root_password}}'
 
 - name: restart mariadb
   service:
@@ -37,28 +36,28 @@
 - name: Removes all anonymous user accounts
   mysql_user:
     login_user: root
-    login_password: "{{mysql_password}}"
+    login_password: "{{mysql_root_password}}"
     name: ''
     host_all: yes
     state: absent
 
 - name: Remove hostname user accounts
-  mysql_user: login_user=root login_password={{mysql_password}} name='root' host={{ ansible_nodename }} state=absent
+  mysql_user: login_user=root login_password={{mysql_root_password}} name='root' host={{ ansible_nodename }} state=absent
 
 - name: Removes test Databases
   mysql_db:
     login_user: root
-    login_password: "{{mysql_password}}"
+    login_password: "{{mysql_root_password}}"
     name: test
     state: absent
 
 - name: Removing privileges on test database
-  command: mysql -uroot -p{{mysql_password}} -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
+  command: mysql -uroot -p{{mysql_root_password}} -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
 
 - name: Create a new database with name 'zabbix'
   mysql_db:
     login_user: root
-    login_password: "{{mysql_password}}"
+    login_password: "{{mysql_root_password}}"
     name: zabbix
     encoding: utf8
     collation: utf8_bin
@@ -67,9 +66,9 @@
 - name: Create database user with name 'zabbix' and password with all database privileges
   mysql_user:
     login_user: root
-    login_password: "{{mysql_password}}"
+    login_password: "{{mysql_root_password}}"
     name: zabbix
-    password: "{{mysql_password}}"
+    password: "{{mysql_root_password}}"
     priv: 'zabbix.*:ALL'
     state: present
 
@@ -79,7 +78,7 @@
 - name: Restore database fot LTS version
   mysql_db:
     login_user: zabbix
-    login_password: "{{mysql_password}}"
+    login_password: "{{mysql_root_password}}"
     name: zabbix
     state: import
     target: /usr/share/doc/zabbix-server-mysql/create.sql
@@ -89,7 +88,7 @@
   lineinfile:
     path: /etc/zabbix/zabbix_server.conf
     regexp: '# DBPassword=' 
-    line: DBPassword={{mysql_password}}
+    line: DBPassword={{mysql_root_password}}
 
 - name: Replace apache.conf
   template:

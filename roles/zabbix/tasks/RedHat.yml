@@ -1,94 +1,29 @@
 ---
-- name: Dwonload zabbix.deb-LTS for centos
+- set_fact:
+    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}//rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{zabbix_meta[zabbix_version].release}}.el{{ansible_distribution_major_version}}.noarch.rpm"
+    zabbix_yum: "{{zabbix_meta[zabbix_version][install].CentOS}}"
+
+- name: Install Zabbinx repo
   yum:
-    name: "{{zabbix_download_url.[ansible_os_family].lts}}"
+    name: "{{zabbix_repo}}"
     state: latest
     update_cache: yes
-  when: zabbix_version=='LTS'
 
-- name: Dwonload zabbix.deb-latest for ubuntu
-  yum:
-    name: "{{zabbix_download_url.[ansible_os_family].latest}}"
-    state: latest
-    update_cache: yes
-  when: zabbix_version=='latest'
-
-- name: Install MySQL official Repo
-  yum: 
-    name: https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm 
-    state: latest
-
-- name: Install zabbix-server-mysql zabbix-frontend-php zabbix-agent
-  yum: 
-    name: [zabbix-server-mysql, zabbix-frontend-php, zabbix-agent]
-    state: latest
-
-- name: Create a new database with name 'zabbix'
-  mysql_db:
-    login_user: root
-    name: zabbix
-    encoding: utf8
-    collation: utf8_bin
-    state: present
-    
-- name: Create database user with name 'zabbix' and password with all database privileges
-  mysql_user:
-    name: zabbix
-    password: KNyQ45W2&4
-    priv: 'zabbix.*:ALL'
-    state: present
-
-- name: unarchive data.sql.gz fot LTS version
-  command: gzip -d /usr/share/doc/zabbix-server-mysql/create.sql.gz
-  when: version=='LTS'
-
-- name: unarchive data.sql.gz for latest version 
-  command: gzip -d /usr/share/zabbix-server-mysql/{{item}}
-  with_items:
-    - schema.sql.gz
-    - images.sql.gz
-    - data.sql.gz
-  when: version=='latest'
-
-- name: Restore database fot LTS version
-  mysql_db:
-    login_user: zabbix
-    login_password: KNyQ45W2&4
-    name: zabbix
-    state: import
-    target: /usr/share/doc/zabbix-server-mysql/create.sql
-  when: version=='LTS'
-
-- name: Restore database for latest version 
-  mysql_db:
-    login_user: zabbix
-    login_password: KNyQ45W2&4
-    name: zabbix
-    state: import
-    target: /usr/share/zabbix-server-mysql/{{item}}
-  with_items:
-    - schema.sql
-    - images.sql
-    - data.sql
-  when: version=='latest'
-
-- name: Change zabbix_server.conf
+- name: Set zabbix.repo
   lineinfile:
-    path: /etc/zabbix/zabbix_server.conf
-    regexp: '# DBPassword='
-    line: DBPassword=KNyQ45W2&4
+    dest: /etc/yum.repos.d/zabbix.repo
+    regexp: enabled=0
+    line: enabled=1
+    backrefs: yes
 
-- name: Replace apache.conf
-  template:
-    src: apache.conf
-    dest: /etc/zabbix/apache.conf
+- name: Install Zabbix on CentOS8
+  yum: 
+    name: "{{zabbix_yum}}"
+    state: latest
+  when: ansible_distribution_major_version != "7"
 
-- name: Restart service
-  service:
-    name: "{{item}}"
-    state: restarted
-    enabled: yes
-  with_items:
-    - zabbix-server
-    - zabbix-agent
-    - apache2
+- name: Install Zabbix on CentOS7
+  yum: 
+    name: [zabbix-server-mysql, zabbix-web-mysql-scl, zabbix-agent, zabbix-apache-conf-scl]
+    state: latest
+  when: ansible_distribution_major_version == "7"
