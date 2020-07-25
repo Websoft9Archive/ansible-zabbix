@@ -12,8 +12,8 @@
 - name: Set zabbix.repo
   lineinfile:
     dest: /etc/yum.repos.d/zabbix.repo
-    regexp: enabled=0
-    line: enabled=1
+    regexp: 'enabled=0'
+    line: 'enabled=1'
     backrefs: yes
 
 - block:
