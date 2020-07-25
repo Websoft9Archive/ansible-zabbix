@@ -5,14 +5,14 @@
   become_method: sudo
 
   vars_files:
-    - /vars/main.yml
+    - vars/main.yml
 
   vars_prompt:
-    - name: 'zabiix_version_selection'
-      prompt: "\nWhich Web-Server do you want to use? [ 1/2 ] \n\n
-      1: 5.0\n
-      2: 4.4\n
-      3: 4.0\n"
+    - name: 'zabbix_version_selection'
+      prompt: "\nWhich Zabbix distribution do you want to use? [ 1/2 ] \n\n
+      1: Zabbix 5.0\n
+      2: Zabbix 4.4\n
+      3: Zabbix 4.0\n"
       private: no
       default: 1
 
@@ -22,7 +22,7 @@
       '2': '4.4'
       '3': '4.0'
 
-    zabbix_version: "{{zabbix_version_select[zabbix_version_selection]}}" 
+    zabbix_version: "{{zabbix_version_select[zabiix_version_selection]}}" 
     zabbix_db_root_password: "{{mysql_root_password}}"
 
   roles:
@@ -30,6 +30,7 @@
     - { role: role_cloud, tags: "role_cloud" }
     - { role: role_apache, tags: "role_apache" }
     - { role: role_mysql, tags: "role_mysql" }
+    - { role: role_docker, tags: "role_docker" }
     - { role: zabbix, tags: "zabbix"}
     - { role: role_init_password, tags: "role_init_password"}
     - { role: role_preend, tags: "role_preend"}

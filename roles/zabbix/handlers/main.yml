@@ -1,3 +1,7 @@
-- name: check_rabbitmq_service
+- name: check_zabbix_server_service
   debug:
-    var: check_rabbitmq_service.stdout
+    var: check_zabbix_server_service.stdout
+
+- name: check_zabbix_agent_service
+  debug:
+    var: check_zabbix_agent_service.stdout

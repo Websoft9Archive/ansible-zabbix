@@ -1,7 +1,7 @@
 ---
 - set_fact:
-    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}//rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{zabbix_meta[zabbix_version].release}}.el{{ansible_distribution_major_version}}.noarch.rpm"
-    zabbix_yum: "{{zabbix_meta[zabbix_version][install].CentOS}}"
+    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{zabbix_meta[zabbix_version].release}}.el{{ansible_distribution_major_version}}.noarch.rpm"
+    zabbix_yum: "{{zabbix_meta[zabbix_version]['install'].CentOS}}"
 
 - name: Install Zabbinx repo
   yum:
@@ -16,14 +16,32 @@
     line: enabled=1
     backrefs: yes
 
-- name: Install Zabbix on CentOS8
-  yum: 
-    name: "{{zabbix_yum}}"
-    state: latest
+- block:
+  - name: Install Zabbix on CentOS8
+    yum: 
+      name: "{{zabbix_yum}}"
+      state: latest
   when: ansible_distribution_major_version != "7"
 
-- name: Install Zabbix on CentOS7
-  yum: 
-    name: [zabbix-server-mysql, zabbix-web-mysql-scl, zabbix-agent, zabbix-apache-conf-scl]
-    state: latest
+- block:
+  - name: Install Zabbix on CentOS7
+    yum: 
+      name: [zabbix-server-mysql, zabbix-web-mysql-scl, zabbix-agent, zabbix-apache-conf-scl]
+      state: latest
+  
+  - name: Create /etc/php-fpm.d directory
+    file:
+      path: /etc/php-fpm.d
+      state: directory
+  
+  - name: Set php-fpm service softlink
+    shell: |
+      ln -sf /usr/lib/systemd/system/rh-php72-php-fpm.service  /usr/lib/systemd/system/php-fpm.service
+      ln -sf /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf  /etc/php-fpm.d
   when: ansible_distribution_major_version == "7"
+
+- name: Set PHP timezone
+  lineinfile:
+    path: /etc/php-fpm.d/zabbix.conf
+    regexp: '; php_value[date.timezone] = Europe/Riga' 
+    line: 'php_value[date.timezone] = Europe/Riga'

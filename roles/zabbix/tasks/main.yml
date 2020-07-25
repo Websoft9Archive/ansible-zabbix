@@ -1,74 +1,46 @@
-# Install by OS_family
+#1 Install by OS_family
 - include: "{{ansible_os_family}}.yml"
 
-# Import database
+#2 Import database
 - name: unarchive data.sql.gz
-  command: gzip -d /usr/share/doc/zabbix-server-mysql/create.sql.gz
+  shell: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u zabbix -p{{zabbix_db_root_password}}"
 
-- name: Restore database
-  mysql_db:
-    login_user: zabbix
-    login_password: "{{zabbix_db_root_password}}"
-    name: zabbix
-    state: import
-    target: /usr/share/doc/zabbix-server-mysql/create.sql
+#3 Configure Zabbix
 
-# Configure Zabbix
-- name: Change zabbix_server.conf
-  lineinfile:
-    path: /etc/zabbix/zabbix_server.conf
-    regexp: '# DBPassword=' 
-    line: DBPassword={{zabbix_db_root_password}}
-
-- name: Replace apache.conf
-  template:
-    src: apache.conf
-    dest: /etc/zabbix/apache.conf
-
-- name: Restart service
-  service:
-    name: "{{item}}"
-    state: restarted
-    enabled: yes
-  with_items:
-    - zabbix-server
-    - zabbix-agent
-    - apache2
-
-# 操作系统中文编码处理，用于支持 Zabbix 中文语言
-- name: locale-gen zh_CN.UTF-8
+- name: Set language code to support zh-CN
   shell: locale-gen zh_CN.UTF-8
 
-- name: restart apache2
-  service:
-    name: apache2
-    state: restarted
-    enabled: yes
+- block:
+  - name: Restart Zabbix and apache service
+    service:
+      name: "{{item}}"
+      state: restarted
+      enabled: yes
+    with_items:
+      - zabbix-server
+      - zabbix-agent
+      - apache
 
-# 软链接处理
-- name: Create /data/config
-  file: 
-    path: /data/config
-    state: directory
+  - name: Restart php-fpm for CentOS
+    service:
+      name: php-fpm
+      state: restarted
+      enabled: yes
+    when: ansible_os_family == RedHat
 
-- name: Create symbolic link
-  file:
-    src: /etc/zabbix
-    dest: /data/config/zabbix
-    state: link
-    force: yes
+#4 Extra Settings
+- name: Set soft link
+  shell: |
+    ln -sf /usr/share/zabbix  /data/wwwroot
+    ln -sf /etc/zabbix  /data/config
+    ln -sf /etc/httpd/conf.d/zabbix.conf  /etc/httpd/vhost
 
-- name: systemctl update
-  apt:
-    name: "*"
-    state: latest
+- name: Check Zabbix-Server Service
+  shell: systemctl status zabbix-server | grep Active*
+  register: check_zabbix_server_service
+  notify: check_zabbix_server_service
 
-# 删除多余文件
-- name: delete extra files
-  file:
-    path: /root/user_policy.txt
-    state: absent
-
-
-
-
+- name: Check Zabbix-Agent Service
+  shell: systemctl status zabbix-agent | grep Active*
+  register: check_zabbix_agent_service
+  notify: check_zabbix_agent_service

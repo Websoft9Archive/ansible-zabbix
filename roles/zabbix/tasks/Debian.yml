@@ -1,7 +1,7 @@
 ---
 - set_fact:
     zabbix_repo: "https://repo.zabbix.com/zabbix{{zabbix_version}}/ubuntu/pool/main/z/zabbix-release/zabbix-release_{{zabbix_meta[zabbix_version].release}}+{{ansible_distribution_release}}_all.deb"
-    zabbix_apt: "{{zabbix_meta[zabbix_version][install].Ubuntu}}"
+    zabbix_apt: "{{zabbix_meta[zabbix_version]['install'].Ubuntu}}"
 
 - name: Install Zabbinx repo
   apt:
@@ -13,3 +13,9 @@
   apt:
     name: "{{zabbix_apt}}"
     state: latest
+
+- name: Set PHP timezone
+  lineinfile:
+    path: /etc/zabbix/apache.conf
+    regexp: '; php_value[date.timezone] = Europe/Riga' 
+    line: 'php_value[date.timezone] = Europe/Riga'
