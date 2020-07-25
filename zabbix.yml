@@ -22,7 +22,7 @@
       '2': '4.4'
       '3': '4.0'
 
-    zabbix_version: "{{zabbix_version_select[zabiix_version_selection]}}" 
+    zabbix_version: "{{zabbix_version_select[zabbix_version_selection]}}" 
     zabbix_db_root_password: "{{mysql_root_password}}"
 
   roles:
