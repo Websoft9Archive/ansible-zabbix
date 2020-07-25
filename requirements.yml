@@ -4,6 +4,12 @@
 - src: http://github.com/websoft9dev/role_cloud
   version: master
 
+- src: http://github.com/websoft9dev/role_mysql
+  version: master
+
+- src: http://github.com/websoft9dev/role_apache
+  version: master
+
 - src: http://github.com/websoft9dev/role_init_password
   version: master
 
