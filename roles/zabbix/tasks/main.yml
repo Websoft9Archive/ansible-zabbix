@@ -3,7 +3,7 @@
 
 #2 Import database
 - name: unarchive data.sql.gz
-  shell: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u zabbix -p{{zabbix_db_root_password}}"
+  shell: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u zabbix -p{{zabbix_db_root_password}} zabbix"
 
 #3 Configure Zabbix
 
