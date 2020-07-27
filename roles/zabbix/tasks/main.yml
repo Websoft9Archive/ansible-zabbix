@@ -43,6 +43,7 @@
 - name: Set soft link
   shell: |
     ln -sf /usr/share/zabbix  /data/wwwroot
+    ln -sf /etc/zabbix  /usr/share/zabbix/conf
     ln -sf /etc/zabbix  /data/config
     ln -sf /etc/httpd/conf.d/zabbix.conf  /etc/httpd/vhost
 
