@@ -13,7 +13,6 @@
     state: import
     target: /usr/share/doc/zabbix-server-mysql/create.sql
 
-
 #3 Configure Zabbix
 
 - name: Set language code to support zh-CN
