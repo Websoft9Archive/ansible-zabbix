@@ -3,7 +3,7 @@
 
 #2 Import database
 - name: unarchive data.sql.gz
-  command: gzip -d /usr/share/doc/zabbix-server-mysql/create.sql.gz
+  command: gzip -d /usr/share/doc/zabbix-server-mysql*/create.sql.gz
 
 - name: Restore database for MySQL
   mysql_db:
