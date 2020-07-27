@@ -1,3 +1,9 @@
+#0 Prepare
+- name: Delete Zabbix files for re-install
+  shell: |
+    rm -rf /etc/zabbix
+    rm -rf /usr/share/zabbix 
+    
 #1 Install by OS_family
 - include: "{{ansible_os_family}}.yml"
 
