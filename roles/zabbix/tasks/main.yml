@@ -14,7 +14,7 @@
     target: /usr/share/doc/zabbix-server-mysql*/create.sql
 
 #3 Configure Zabbix
-- name: Change zabbix_server.conf
+- name: Set DBpassword on zabbix_server.conf for Zabbix-Server Connection
   lineinfile:
     path: /etc/zabbix/zabbix_server.conf
     regexp: '# DBPassword='
