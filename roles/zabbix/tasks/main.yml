@@ -3,7 +3,7 @@
 
 #2 Import database
 - name: unarchive data.sql.gz
-  command: gzip -d /usr/share/doc/zabbix-server-mysql*/create.sql.gz
+  command: tar -xzf /usr/share/doc/zabbix-server-mysql*/create.sql.gz -C /etc/zabbix
 
 - name: Restore database for MySQL
   mysql_db:
@@ -11,7 +11,7 @@
     login_password: "{{zabbix_db_root_password}}"
     name: zabbix
     state: import
-    target: /usr/share/doc/zabbix-server-mysql/create.sql
+    target: /etc/zabbix/create.sql
 
 #3 Configure Zabbix
 
