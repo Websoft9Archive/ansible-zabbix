@@ -14,6 +14,12 @@
     target: /usr/share/doc/zabbix-server-mysql*/create.sql
 
 #3 Configure Zabbix
+- name: Change zabbix_server.conf
+  lineinfile:
+    path: /etc/zabbix/zabbix_server.conf
+    regexp: '# DBPassword='
+    line: DBPassword={{zabbix_db_root_password}}
+
 - block:
   - name: Restart Zabbix and apache service
     service:
