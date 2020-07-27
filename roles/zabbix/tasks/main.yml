@@ -46,6 +46,7 @@
     ln -sf /etc/zabbix  /usr/share/zabbix/conf
     ln -sf /etc/zabbix  /data/config
     ln -sf /etc/httpd/conf.d/zabbix.conf  /etc/httpd/vhost
+    ln -sf /var/log/zabbix  /data/logs
 
 - name: Check Zabbix-Server Service
   shell: systemctl status zabbix-server | grep Active*
