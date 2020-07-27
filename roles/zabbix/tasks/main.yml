@@ -14,10 +14,6 @@
     target: /usr/share/doc/zabbix-server-mysql*/create.sql.gz
 
 #3 Configure Zabbix
-
-- name: Set language code to support zh-CN
-  shell: locale-gen zh_CN.UTF-8
-
 - block:
   - name: Restart Zabbix and apache service
     service:
