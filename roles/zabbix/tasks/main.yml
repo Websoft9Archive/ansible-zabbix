@@ -2,13 +2,16 @@
 - include: "{{ansible_os_family}}.yml"
 
 #2 Import database
+- name: Rename SQL file
+  shell: ln -sf /usr/share/doc/zabbix-server-mysql*/create.sql.gz  /etc/zabbix 
+  
 - name: Restore database for MySQL
   mysql_db:
     login_user: zabbix
     login_password: "{{zabbix_db_root_password}}"
     name: zabbix
     state: import
-    target: /usr/share/doc/zabbix-server-mysql*/create.sql.gz 
+    target: /etc/zabbix/create.sql.gz
 
 #3 Configure Zabbix
 - name: Set DBpassword on zabbix_server.conf for Zabbix-Server Connection
