@@ -5,7 +5,7 @@
 
 - name: Install Zabbinx repo
   apt:
-    deb: "{{zabbix_repo}}"
+    name: "{{zabbix_repo}}"
     update_cache: yes
     autoremove: yes
 
