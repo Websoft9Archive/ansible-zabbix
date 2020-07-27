@@ -21,7 +21,9 @@ init_db:
   mysql:
     admin: root
     users: ["zabbix"]
-    password: "123456"  
+    password: "123456" 
+    config_paths:
+      - /etc/zabbix/zabbix_server.conf
     
 init_application:
   zabbix:
