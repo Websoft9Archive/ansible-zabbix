@@ -11,7 +11,7 @@
 
 - name: Install Zabbix
   apt:
-    name: "[{{zabbix_apt}}]"
+    name: "{{zabbix_apt}}"
     state: latest
 
 - name: Set PHP timezone
