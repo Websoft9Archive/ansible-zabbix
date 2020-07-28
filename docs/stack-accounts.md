@@ -1,23 +1,23 @@
 # Username and Password
 
+You use the **SSH** to connect your Server and run the command `sudo cat /credentials/password.txt` to get the username and password of this deployment solution.
+
+![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/common/catdbpassword-websoft9.png)
+
 These accounts are required for Zabbix image installation and configuration
 
 ## Zabbix
 
-Following is the default Administrator account of Zabbix: 
+## Zabbix
 
-Administrator username: `Admin`  
-Administrator password: `zabbix`  
+* Zabbix administrator username: `Admin`
+* Zabbix administrator password: stored in the file of your server */credentials/password.txt*
+  > If there no password.txt exist, the administrator password is `zabbix`
 
-Zabbix log in URL: *http://Internet IP/zabbix*
-
-## MariaDB
+## MySQL
 
 * Administrator username: *`root`*
-* Administrator password: stored in the file of your server instance: */credentials/password.txt*. 
-   ![Run the cat command](https://libs.websoft9.com/Websoft9/DocsPicture/zh/common/catdbpassword-websoft9.png)
-
-   You use the **online SSH interface on Cloud Console** and run `cat /credentials/password.txt` command to get the database password
+* Administrator password: stored in the file of your server instance: */credentials/password.txt*
 
 > If you want to log in MySQL, refer to [MySQL Web interface Management](/admin-mysql.md)
 
@@ -31,7 +31,8 @@ Zabbix log in URL: *http://Internet IP/zabbix*
    | --- | --- | --- |
    |  Azure   |  It was set by yourself when created instance   | [How to enable root access?](https://support.websoft9.com/docs/azure/server-login.html#sample2-enable-the-root-username) |
    |  AWS CentOS   |  centos   | [How to enable root access?](https://support.websoft9.com/docs/aws/server-login.html#sample2-enable-the-root-username) |
+   |  AWS AmaonLinux   |  ec2-user   | [How to enable root access?](https://support.websoft9.com/docs/aws/server-login.html#sample2-enable-the-root-username) |
    |  AWS Ubuntu   |  ubuntu   | [How to enable root access?](https://support.websoft9.com/docs/aws/server-login.html#sample2-enable-the-root-username) |
    |  Alibaba Cloud, HUAWEI CLOUD, Tencent Cloud |  root   |
 
-If don't remember the password of Linux, you should reset password on Cloud Console
+   > If don't remember the password of Linux, you should reset password on Cloud Console

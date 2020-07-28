@@ -8,11 +8,15 @@ Zabbix 预装包，已安装Web服务器 SSL 模块和公共免费证书方案 [
 
 ## 配置方案
 
-### 免费证书方案
+### 自动部署
 
-如果你想使用免费证书，只需在服务器中运行一条命令`certbot`就可以启动证书部署。无需申请证书、无需上传证书。
+如果没有申请证书，只需在服务器中运行一条命令`sudo certbot`便可以启动免费证书**自动**申请和部署
 
-### 上传证书方案
+```
+sudo certbot
+```
+
+### 手动部署
 
 如果你已经申请了商业证书，只需三个步骤，即可完成HTTPS配置
 
@@ -24,7 +28,6 @@ Zabbix 预装包，已安装Web服务器 SSL 模块和公共免费证书方案 [
    ``` text
    SSLCertificateFile	/etc/ssl/certs/ssl-cert-snakeoil.pem
 	SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-
    ```
 4. 保存， [重启 Apache 服务](/admin-services.md#apache)
 

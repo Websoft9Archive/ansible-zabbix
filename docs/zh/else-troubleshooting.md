@@ -8,7 +8,11 @@
 
 若已完成 Zabbix 安装向导，再通过 phpMyAdmin 修改数据库密码，Zabbix 就会连不上数据库
 
-需要修改 [Zabbix 配置文件](/zh/stack-components.md#zabbix) 对应的数据库 password 参数即可。
+需要修改 [Zabbix 配置文件](/zh/stack-components.md#zabbix) 对应的数据库 DBpassword 参数即可。
+
+#### ERROR 1045 (28000): Access denied for user 'zabbix'@'localhost' (using password: YES)?
+
+同上
 
 #### Apache 服务无法启动？
 

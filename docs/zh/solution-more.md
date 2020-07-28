@@ -18,6 +18,31 @@ Zabbix 域名绑定操作步骤：
    ```
 3. 保存配置文件，[重启 Apache 服务](/zh/admin-services.md#apache)
 
+## 修改密码
+
+如果在 Zabbix 运行中修改了数据库用户 zabbix 的密码，就会导致 Zabbix 无法连接数据库此时需要修改两处：
+
+1. 修改 Zabbix 前端配置文件：*/etc/zabbix/web/zabbix.conf.php*，将 $DB['PASSWORD'] 对应的值修改为你的新密码
+   ```
+   // Zabbix GUI configuration file.
+   $DB['TYPE']				= 'MYSQL';
+   $DB['SERVER']			= 'localhost';
+   $DB['PORT']				= '0';
+   $DB['DATABASE']			= 'zabbix';
+   $DB['USER']				= 'zabbix';
+   $DB['PASSWORD']			= '123456';
+   ```
+
+2. 修改 Zabbix 服务端配置文件：*/etc/zabbix/zabbix_server.conf*，将 $DB['PASSWORD'] 对应的值修改为你的新密码
+   ```
+   # Default:
+   DBPassword=6GM2ylUizRo2h7c
+   ```
+3. 重启服务后生效
+   ```
+   sudo systemctl restart zabbix-server
+   ```
+
 ## Zabbix 多语言
 
 Zabbix 默认已经内置多种语言包，但 Zabbix 的语言包依赖于操作系统对应的字符编码设置。
