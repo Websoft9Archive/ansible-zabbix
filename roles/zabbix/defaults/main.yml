@@ -12,17 +12,17 @@ zabbix_meta:
   "5.0":
     release: "5.0-1"
     install: 
-      CentOS: "zabbix-server-mysql zabbix-web-mysql zabbix-agent zabbix-apache-conf"
+      CentOS: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
       Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
 
   "4.4":
     release: "4.4-1"
     install: 
-      CentOS: "zabbix-server-mysql zabbix-web-mysql zabbix-agent zabbix-apache-conf"
+      CentOS: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
       Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
 
   "4.0":
     release: "4.0-2"
     install: 
-      CentOS: "zabbix-server-mysql zabbix-web-mysql zabbix-agent"
+      CentOS: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
       Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
