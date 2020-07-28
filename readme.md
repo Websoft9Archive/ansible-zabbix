@@ -38,7 +38,7 @@ zabbix_meta:
 以 root 用户登录 Linux，运行下面的**命令脚本**即可启动自动化部署，然后耐心等待，直至安装成功。
 
 ```
-wget -N https://raw.githubusercontent.com/Websoft9/linux/master/ansible_script/install.py ; python install.py zabbix https://github.com/Websoft9/ansible-zabbix.git
+wget -N https://raw.githubusercontent.com/Websoft9/ansible-linux/master/scripts/install.sh; bash install.sh -r zabbix
 ```  
 
 注意：  
