@@ -2,6 +2,8 @@ common_os_support: ["CentOS", "Ubuntu"]
 docker_applications: 
   - phpmyadmin
 
+apache_certbot: True
+
 mysql_version: "5.7"
 mysql_root_password: "123456"
 mysql_remote: True
