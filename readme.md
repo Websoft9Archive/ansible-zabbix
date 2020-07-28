@@ -25,26 +25,13 @@
 
 ## 本项目安装的是 Zabbix 最新版吗？
 
-本项目采用官方提供的 Zabbix 二进制安装包安装方式（适合于生产环境），不同的 Zabbix 版本的下载地址不一样，因此需要不定期以修改`/roles/zabbix/tasks/ubuntu.yml`文件中对应的下载地址以保证为最新版本
+本项目采用官方提供的 Zabbix 二进制安装包安装方式（适合于生产环境），不同的 Zabbix 版本的下载地址不一样，通过修改 [zabbix_meta](/roles/zabbix/defaults/main.yml) 变量中的 release 维护最新小版本的更新。同时不定期检查 zabbix_meta 否匹配[官方最新的安装地址](https://www.zabbix.com/download)。
 
 ```
- # 添加apt源
- - name: Download zabbix.deb-LTS for ubuntu
-    get_url:
-        url: https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
-        dest: ~/zabbix.deb
-    when: version=='LTS'
-
-  - name: Download zabbix.deb-latest for ubuntu
-     get_url:
-        url: https://repo.zabbix.com/zabbix/4.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.2-1+bionic_all.deb
-        dest: ~/zabbix.deb
-    when: version=='latest'
+zabbix_meta:
+  "5.0":
+    release: "5.0-1"
 ```
-
-本项目默认安装 LTS 版本，安装 latest 版本请通过 ansible 变量控制：`version=latest`  
-
-最新版本以及下载地址请查看官方[Download 页面](https://www.zabbix.com/download)
 
 ## 安装指南
 
