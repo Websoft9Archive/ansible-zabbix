@@ -34,5 +34,5 @@ init_application:
     commands: 
       - touch /credentials/hashpasswd.php
       - echo "<?php \$options = [ 'cost' => 10, ]; echo password_hash("$new_password", PASSWORD_BCRYPT, \$options); ?>" > /credentials/hashpasswd.php
-      - pawd=$(/opt/rh/rh-php72/root/usr/bin/php /credentials/hashpasswd.php)
+      - pawd=$(/usr/bin/php /credentials/hashpasswd.php)
       - mysql -uroot -p"$new_password" -h localhost -D zabbix -e "update users set passwd='$pawd' where name='Zabbix'"
