@@ -43,7 +43,7 @@
  
 - name: Set php-fpm service softlink
   shell: 
-    ln -sf /usr/lib/systemd/system/rh-php72-php-fpm.service  /usr/bin/php
+    ln -sf /opt/rh/rh-php72/root/usr/bin/php  /usr/bin/php
 
 - name: Set PHP timezone
   lineinfile:
