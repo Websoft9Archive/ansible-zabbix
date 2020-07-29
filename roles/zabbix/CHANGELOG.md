@@ -9,8 +9,10 @@
 
 ### Bug Fixes
 
-* 2020-02-14  
+* 2020-07-28 ubuntu zabbix install fail
+* 2020-07-29 inital password 
 
 ### Features
 
-* 2020-07-27  Optimize by cdl
+* 2020-07-28  update vars, define package array in meta
+* 2020-07-29 password_hash 
