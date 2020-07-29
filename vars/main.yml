@@ -32,5 +32,5 @@ init_application:
     password: "zabbix"
     service_after: mysql.service
     commands: 
-      - pawd=$(/opt/rh/rh-php72/root/usr/bin/php /credentials/hashpasswd.php.php)
-      - update users set passwd=md5('$pawd') where name='Zabbix' | mysql -uroot -p$new_password
+      - pawd=$(/opt/rh/rh-php72/root/usr/bin/php /credentials/hashpasswd.php)
+      - mysql -uroot -p$new_password -h localhost -D zabbix -e "update users set passwd='$pawd' where name='Zabbix'"
