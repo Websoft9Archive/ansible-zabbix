@@ -20,6 +20,7 @@
   - name: Install Zabbix on CentOS8
     yum: 
       name: "{{zabbix_yum}}"
+      update_cache: yes
       state: latest
   when: ansible_distribution_major_version != "7"
 
@@ -28,6 +29,7 @@
     yum: 
       name: [zabbix-server-mysql, zabbix-web-mysql-scl, zabbix-agent, zabbix-apache-conf-scl]
       state: latest
+      update_cache: yes
   
   - name: Create /etc/php-fpm.d directory
     file:
