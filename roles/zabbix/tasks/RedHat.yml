@@ -10,11 +10,10 @@
     update_cache: yes
 
 - name: Set zabbix.repo
-  lineinfile:
-    dest: /etc/yum.repos.d/zabbix.repo
+  replace:
+    path: /etc/yum.repos.d/zabbix.repo
     regexp: 'enabled=0'
-    line: 'enabled=1'
-    backrefs: yes
+    replace: 'enabled=1'
 
 - block:
   - name: Install Zabbix on CentOS8
