@@ -65,4 +65,4 @@
   notify: check_zabbix_agent_service
 
 - name: Check Zabbix Version
-  shell: sudo echo "Zabbix $((yum info zabbix-server-mysql || apt zabbix-server-mysql)  | grep Version | sed -n 1p)" | sudo tee -a  /data/logs/install_version.txt
+  shell: sudo echo "Zabbix $((yum info zabbix-server-mysql || apt show zabbix-server-mysql)  | grep Version | sed -n 1p)" | sudo tee -a  /data/logs/install_version.txt
