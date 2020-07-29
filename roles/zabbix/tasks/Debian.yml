@@ -9,6 +9,10 @@
     update_cache: yes
     autoremove: yes
 
+- name: Print zabbix_apt Param
+  debug:
+    msg: "var value: {{ zabbix_apt }}"
+
 - name: Install Zabbix
   apt:
     name: "{{zabbix_apt}}"
