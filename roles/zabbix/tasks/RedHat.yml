@@ -41,7 +41,7 @@
       ln -sf /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf  /etc/php-fpm.d
   when: ansible_distribution_major_version == "7"
  
-- name: Set php-fpm service softlink
+- name: Set bin php softlink
   shell: 
     ln -sf /opt/rh/rh-php72/root/usr/bin/php  /usr/bin/php
 
