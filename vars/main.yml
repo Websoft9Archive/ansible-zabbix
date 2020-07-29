@@ -42,4 +42,4 @@ init_application:
             ?>
             EOF
       - pawd=$(/opt/rh/rh-php72/root/usr/bin/php /credentials/hashpasswd.php)
-      - mysql -uroot -p$new_password -h localhost -D zabbix -e "update users set passwd='$pawd' where name='Zabbix'"
+      - mysql -uroot -p"$new_password" -h localhost -D zabbix -e "update users set passwd='$pawd' where name='Zabbix'"
