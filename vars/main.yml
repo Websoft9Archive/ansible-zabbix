@@ -35,10 +35,10 @@ init_application:
       - touch /credentials/hashpasswd.php
       - cat > /credentials/hashpasswd.php << EOF
             <?php
-            $options = [
+            \$options = [
                 'cost' => 10,
             ];
-            echo password_hash("$new_password", PASSWORD_BCRYPT, $options);
+            echo password_hash("$new_password", PASSWORD_BCRYPT, \$options);
             ?>
             EOF
       - pawd=$(/opt/rh/rh-php72/root/usr/bin/php /credentials/hashpasswd.php)
