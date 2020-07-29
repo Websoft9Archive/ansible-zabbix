@@ -65,4 +65,4 @@
   notify: check_zabbix_agent_service
 
 - name: Check Zabbix Version
-  shell: sudo echo "zabbix_server --version |sed -n 1p" >>/data/logs/install_version.txt
+  shell: sudo sh -c "echo `zabbix_server --version |sed -n 1p` >>/data/logs/install_version.txt"
