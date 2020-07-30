@@ -18,7 +18,7 @@
     name: "{{zabbix_apt}}"
     update_cache: yes
     state: latest
-    
+ 
 - name: if zabbix.conf is not exist rename zabbix to zabbix.conf
   shell: mv /etc/apache2/sites-enabled/zabbix /etc/apache2/sites-enabled/zabbix.conf
 
