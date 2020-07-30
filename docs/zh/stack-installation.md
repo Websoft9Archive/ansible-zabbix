@@ -10,7 +10,7 @@
 
 ## Zabbix 安装向导
 
-1. 使用本地电脑的 Chrome 或 Firefox 浏览器访问网址：*http://域名/zabbix* 或 *http://服务器公网IP//zabbix*, 就进入引导首页
+1. 使用本地电脑的 Chrome 或 Firefox 浏览器访问网址：*http://域名/zabbix* 或 *http://服务器公网IP/zabbix*, 就进入引导首页
    ![开始安装 Zabbix](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installwel-websoft9.png)
 
    **如果默认打开就是登陆界面**，请直接查看（[默认账号](/zh/stack-accounts.html#zabbix)） 后登录使用
