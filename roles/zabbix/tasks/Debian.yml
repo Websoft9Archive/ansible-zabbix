@@ -23,10 +23,10 @@
   shell: cd /etc/apache2/sites-enabled; if [ ! -f zabbix.conf ];then mv zabbix zabbix.conf;fi
 
 - name: Set PHP timezone
-  lineinfile:
+  replace:
     path: /etc/zabbix/apache.conf
-    regexp: '# php_value date.timezone Europe/Riga' 
-    line: 'php_value date.timezone Europe/Riga'
+    regexp: '# php_value date.timezone Europe/Riga'
+    replace: 'php_value date.timezone Europe/Riga'
     
 - name: Set language code to support zh-CN
   shell: locale-gen zh_CN.UTF-8
