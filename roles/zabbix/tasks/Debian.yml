@@ -20,7 +20,7 @@
     state: latest
  
 - name: if zabbix.conf is not exist rename zabbix to zabbix.conf
-  shell: mv /etc/apache2/sites-enabled/zabbix /etc/apache2/sites-enabled/zabbix.conf
+  shell: cd /etc/apache2/sites-enabled; if [ ! -f zabbix.conf ];then mv zabbix zabbix.conf;fi
 
 - name: Set PHP timezone
   lineinfile:
