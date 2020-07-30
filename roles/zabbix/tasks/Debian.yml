@@ -25,8 +25,8 @@
 - name: Set PHP timezone
   lineinfile:
     path: /etc/zabbix/apache.conf
-    regexp: '        # php_value date.timezone Europe/Riga' 
-    line: '        php_value date.timezone Europe/Riga'
+    regexp: '# php_value date.timezone Europe/Riga' 
+    line: 'php_value date.timezone Europe/Riga'
     
 - name: Set language code to support zh-CN
   shell: locale-gen zh_CN.UTF-8
