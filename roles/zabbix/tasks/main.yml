@@ -53,6 +53,12 @@
     ln -sf /etc/zabbix  /data/config
     ln -sf /etc/httpd/conf.d/zabbix.conf  /etc/httpd/vhost
     ln -sf /var/log/zabbix  /data/logs
+  
+- name: if zabbix.conf is not exist rename zabbix to zabbix.conf
+  shell: |
+    rm -rf /etc/apache2/sites-enabled/zabbix*
+    ln -sf /etc/zabbix/apache.conf /etc/apache2/sites-enabled/zabbix.conf
+    systemctl restart apache
 
 - name: Check Zabbix-Server Service
   shell: systemctl status zabbix-server | grep Active*
