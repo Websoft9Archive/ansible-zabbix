@@ -1,4 +1,4 @@
-common_os_support: ["CentOS", "Ubuntu","Amazon"]
+common_os_support: ["CentOS", "Ubuntu", "Amazon"]
 docker_applications: 
   - phpmyadmin
 
