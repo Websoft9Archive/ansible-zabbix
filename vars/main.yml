@@ -3,6 +3,8 @@ docker_applications:
   - phpmyadmin
 
 apache_certbot: True
+apache_appname: "zabbix"
+apache_vhost_mode: "www"
 
 mysql_version: "5.7"
 mysql_root_password: "123456"
@@ -15,7 +17,6 @@ mysql_databases:
  
 mysql_users:
  - name: zabbix
-   host: localhost
    priv: 'zabbix.*:ALL'
    
 init_db: 
