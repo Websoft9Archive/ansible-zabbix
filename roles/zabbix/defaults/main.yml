@@ -10,7 +10,7 @@ zabbix_db_root_password: "123456"
 
 zabbix_meta:
   "5.0":
-    release: "5.0-2"
+    release: "5.0-1"
     install: 
       CentOS: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
       Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
