@@ -8,8 +8,6 @@ These accounts are required for Zabbix image installation and configuration
 
 ## Zabbix
 
-## Zabbix
-
 * Zabbix administrator username: `Admin`
 * Zabbix administrator password: stored in the file of your server */credentials/password.txt*
   > If there no password.txt exist, the administrator password is `zabbix`
