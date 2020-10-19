@@ -57,12 +57,12 @@ Hostname=zabbix_web (客户端主机名)
 3. 登入zabbix服务端界面   
 使用本地电脑的 Chrome 或 Firefox 浏览器访问网址：*http://域名/zabbix* 或 *http://服务器公网IP/zabbix*, 进入引导首页后,进行如下操作:
 首先,您需要通过创建主机去连接到客户端
-![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addhost-websoft9.png)
-![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addhost2-websoft9.png)
+![Zabbix 添加主机](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addhost-websoft9.png)
+![Zabbix 添加主机](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addhost2-websoft9.png)
 其次,添加模板配置监控项
-![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-updatetemplate-websoft9.png)
+![Zabbix 添加模板](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-updatetemplate-websoft9.png)
 验证安装,出现如下界面,即为安装成功
-![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addok-websoft9.png)
+![Zabbix 验证安装](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addok-websoft9.png)
 
 > 需要了解更多 Zabbix 的使用，请参考官方文档：[Zabbix Documentation](https://www.zabbix.com/documentation/current/)
 
