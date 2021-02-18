@@ -7,22 +7,3 @@ zabbix_db_root_password: "123456"
 # Repo_CentOS_sample: "https://repo.zabbix.com/zabbix/5.0/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-5.0-1.el{{ansible_distribution_major_version}}.noarch.rpm"
 # Repo_Ubuntu_sample: "https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+{{ansible_distribution_release}}_all.deb"
 # CentOS7: zabbix-web-mysql-scl zabbix-apache-conf-scl replace zabbix-web-mysql zabbix-apache-conf
-
-zabbix_meta:
-  "5.0":
-    release: "5.0-1"
-    install: 
-      CentOS: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
-      Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-
-  "4.4":
-    release: "4.4-1"
-    install: 
-      CentOS: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
-      Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-
-  "4.0":
-    release: "4.0-2"
-    install: 
-      CentOS: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
-      Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
