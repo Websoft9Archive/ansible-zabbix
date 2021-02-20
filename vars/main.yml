@@ -19,30 +19,17 @@ mysql_users:
  - name: zabbix
    priv: 'zabbix.*:ALL'
 
+
 zabbix_meta:
-  "5.2":
-    release: "5.2-1"
-    install: 
-      CentOS: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
-      Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-
-  "5.0":
-    release: "5.0-1"
-    install: 
-      CentOS: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
-      Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-
-  "4.4":
-    release: "4.4-1"
-    install: 
-      CentOS: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
-      Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-
-  "4.0":
-    release: "4.0-2"
-    install: 
-      CentOS: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
-      Ubuntu: [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
+  release:
+    "5.2": "5.2-1"
+    "5.0": "5.0-1"
+    "4.4": "4.4-1"
+    "4.0": "4.0-2"
+  package: 
+    CentOS7: [zabbix-server-mysql, zabbix-web-mysql-scl, zabbix-agent, zabbix-apache-conf-scl]
+    CentOS8: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
+    Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
 
 init_db: 
   mysql:

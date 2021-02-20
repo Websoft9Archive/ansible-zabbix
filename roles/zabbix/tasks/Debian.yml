@@ -1,11 +1,11 @@
 ---
 - set_fact:
-    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/ubuntu/pool/main/z/zabbix-release/zabbix-release_{{zabbix_meta[zabbix_version].release}}+{{ansible_distribution_release}}_all.deb"
+    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/ubuntu/pool/main/z/zabbix-release/zabbix-release_{{zabbix_meta.release[zabbix_version]}}+{{ansible_distribution_release}}_all.deb"
     zabbix_apt: "{{zabbix_meta[zabbix_version]['install'].Ubuntu}}"
   when: zabbix_version is version("5.0","le")
 
 - set_fact:
-    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/ubuntu/pool/main/z/zabbix-release/zabbix-release {{zabbix_meta[zabbix_version].release}}+{{ansible_distribution_release}}{{ansible_distribution_version}}_all.deb"
+    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/ubuntu/pool/main/z/zabbix-release/zabbix-release {{zabbix_meta.release[zabbix_version]}}+ubuntu{{ansible_distribution_version}}_all.deb"
     zabbix_apt: "{{zabbix_meta[zabbix_version]['install'].Ubuntu}}"
   when: zabbix_version is version("5.0","gt") 
 
