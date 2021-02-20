@@ -26,11 +26,20 @@ zabbix_meta:
     "5.0": "5.0-1"
     "4.4": "4.4-1"
     "4.0": "4.0-2"
-  package: 
-    CentOS7: [zabbix-server-mysql, zabbix-web-mysql-scl, zabbix-agent, zabbix-apache-conf-scl]
-    CentOS8: [zabbix-server-mysql,zabbix-web-mysql,zabbix-agent,zabbix-apache-conf]
-    Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-
+  package:
+    "5.2": 
+      CentOS: [zabbix-agent]
+      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
+    "5.0": 
+      CentOS: [zabbix-web-mysql-scl, zabbix-apache-conf-scl,zabbix-server-mysql, zabbix-agent]
+      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
+    "4.4": 
+      CentOS: [ zabbix-server-mysql,zabbix-web-mysql,zabbix-agent]
+      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
+    "4.0": 
+      CentOS: [ zabbix-server-mysql,zabbix-web-mysql,zabbix-agent]
+      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
+    
 init_db: 
   mysql:
     admin: root
