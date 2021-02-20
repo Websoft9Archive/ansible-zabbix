@@ -5,7 +5,7 @@
   when: zabbix_version is version("5.0","le")
 
 - set_fact:
-    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/ubuntu/pool/main/z/zabbix-release/zabbix-release {{zabbix_meta.release[zabbix_version]}}+ubuntu{{ansible_distribution_version}} all.deb"
+    zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/ubuntu/pool/main/z/zabbix-release/zabbix-release_{{zabbix_meta.release[zabbix_version]}}%2Bubuntu{{ansible_distribution_version}}_all.deb"
     zabbix_apt: "{{zabbix_meta.package.Ubuntu}}"
   when: zabbix_version is version("5.0","gt") 
 
