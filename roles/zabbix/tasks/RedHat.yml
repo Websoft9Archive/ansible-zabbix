@@ -9,6 +9,10 @@
     zabbix_yum: "{{zabbix_meta.package[zabbix_version].CentOS}}"
   when: ansible_distribution == "Amazon"
 
+- name: Install scl repo on amazon linux
+  yum:
+    name: centos-release-scl
+    
 - name: Install Zabbinx repo
   yum:
     name: "{{zabbix_repo}}"
