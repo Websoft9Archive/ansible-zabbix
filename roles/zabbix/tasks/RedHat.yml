@@ -27,6 +27,7 @@
       name: "{{zabbix_yum}}"
       state: latest
       update_cache: yes
+      skip_broken: yes
   
   - name: Create /etc/php-fpm.d directory
     file:
