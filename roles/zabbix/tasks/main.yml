@@ -20,6 +20,14 @@
     target: /etc/zabbix/create.sql.gz
 
 #3 Configure Zabbix
+- name: Change php.ini default
+  lineinfile:
+    dest: /etc/php/7.4/apache2/php.ini
+    regexp: '^{{ item.name }} = *'
+    line: "{{ item.name }} = {{item.value}}"
+  with_items: "{{ zabbix_php_configuration }}"
+  when: zabbix_version == "5.2"
+  
 - name: Set DBpassword on zabbix_server.conf for Zabbix-Server Connection
   lineinfile:
     path: /etc/zabbix/zabbix_server.conf
