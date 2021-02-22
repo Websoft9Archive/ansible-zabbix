@@ -1,10 +1,12 @@
 ---
 - set_fact:
     zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{zabbix_meta.release[zabbix_version]}}.el{{ansible_distribution_major_version}}.noarch.rpm"
+    zabbix_yum: "{{zabbix_meta.package[zabbix_version].CentOS}}"
   when: ansible_distribution == "CentOS" 
 
 - set_fact:
     zabbix_repo: "https://repo.zabbix.com/zabbix/{{zabbix_version}}/rhel/7/x86_64/zabbix-release-{{zabbix_meta.release[zabbix_version]}}.el7.noarch.rpm"
+    zabbix_yum: "{{zabbix_meta.package[zabbix_version].CentOS}}"
   when: ansible_distribution == "Amazon"
 
 - name: Install Zabbinx repo
@@ -20,17 +22,9 @@
     replace: 'enabled=1'
 
 - block:
-  - name: Install Zabbix on CentOS8
+  - name: Install Zabbix on CentOS
     yum: 
-      name: "{{zabbix_meta.package.CentOS8}}"
-      update_cache: yes
-      state: latest
-  when: ansible_distribution_major_version != "7" and ansible_distribution != "Amazon"
-
-- block:
-  - name: Install Zabbix on CentOS7
-    yum: 
-      name: "{{zabbix_meta.package.CentOS7}}"
+      name: "{{zabbix_yum}}"
       state: latest
       update_cache: yes
   
