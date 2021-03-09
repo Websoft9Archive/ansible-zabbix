@@ -1,82 +1,42 @@
-#0 Prepare
-- name: Delete Zabbix files for re-install
-  shell: |
-    rm -rf /etc/zabbix
-    rm -rf /usr/share/zabbix 
+- name: Create a zabbix dir
+  file: 
+    state: directory
+    path: /data/wwwroot/zabbix
+
+- name: copy .env and docker-compose file
+  tempalte: 
+    src: '{{item.src}}'
+    dest: '/data/wwwroot/zabbix'
+  with_items:
+    - .env_agent
+    - .env_db_mysql
+    - .env_db_mysql_proxy
+    - .env_java
+    - .env_prx
+    - .env_prx_mysql
+    - .env_srv
+    - .env_web
+    - 'docker-compose-{{zabbix_version}}.yml'
+
+- name: Use docker-compose run zabbix
+  shell: | 
+    mv docker-compose-{{zabbix_version}}.yml docker-compose.yml
+    docker-compose up -d
+    sleep 30
+  args:
+    chdir: /data/wwwroot/zabbix
+
+# check service and version
+- name: Copy script files to remote
+  copy: src=check_dockerapp_service.sh dest=/tmp/check_dockerapp_service.sh
+
+- name: Check dockerapp service
+  shell: bash /tmp/check_dockerapp_service.sh
+  register: check_dockerapp_service
+  notify: check_dockerapp_service
     
-#1 Install by OS_family
-- include: "{{ansible_os_family}}.yml"
-
-#2 Import database
-- name: Rename SQL zip file
-  shell: ln -sf /usr/share/doc/zabbix-server-mysql*/create.sql.gz  /etc/zabbix 
+- name: Check zabbix version
+  shell: >
+    sudo echo "zabbix version:" $(docker images |grep zabbix-server |cut -d- -f4) |sudo tee -a /data/logs/install_version.txt  
   
-- name: Restore database for MySQL
-  mysql_db:
-    login_user: zabbix
-    login_password: "{{zabbix_db_root_password}}"
-    name: zabbix
-    state: import
-    target: /etc/zabbix/create.sql.gz
-
-#3 Configure Zabbix
-- name: Change php.ini default
-  lineinfile:
-    dest: /etc/php/7.4/apache2/php.ini
-    regexp: '^{{ item.name }} = *'
-    line: "{{ item.name }} = {{item.value}}"
-  with_items: "{{ zabbix_php_configuration }}"
-  
-- name: Set DBpassword on zabbix_server.conf for Zabbix-Server Connection
-  lineinfile:
-    path: /etc/zabbix/zabbix_server.conf
-    regexp: '# DBPassword='
-    line: DBPassword={{zabbix_db_root_password}}
-    backrefs: yes
-
-- block:
-  - name: Restart Zabbix and apache service
-    service:
-      name: "{{item}}"
-      state: restarted
-      enabled: yes
-    with_items:
-      - zabbix-server
-      - zabbix-agent
-      - apache
-
-  - name: Restart php-fpm for CentOS
-    service:
-      name: php-fpm
-      state: restarted
-      enabled: yes
-    when: ansible_os_family == "RedHat"
-
-#4 Extra Settings
-- name: Set soft link
-  shell: |
-    ln -sf /usr/share/zabbix  /data/wwwroot
-    ln -sf /etc/zabbix  /usr/share/zabbix/conf
-    ln -sf /etc/zabbix  /data/config
-    ln -sf /etc/httpd/conf.d/zabbix.conf  /etc/httpd/vhost
-    ln -sf /var/log/zabbix  /data/logs
-  
-- name: if zabbix.conf is not exist rename zabbix to zabbix.conf
-  shell: |
-    rm -rf /etc/apache2/sites-enabled/zabbix*
-    ln -sf /etc/zabbix/apache.conf /etc/apache2/sites-enabled/zabbix.conf
-    systemctl restart apache
-  when: ansible_os_family == "Debian"
-
-- name: Check Zabbix-Server Service
-  shell: systemctl status zabbix-server | grep Active*
-  register: check_zabbix_server_service
-  notify: check_zabbix_server_service
-
-- name: Check Zabbix-Agent Service
-  shell: systemctl status zabbix-agent | grep Active*
-  register: check_zabbix_agent_service
-  notify: check_zabbix_agent_service
-
-- name: Check Zabbix Version
-  shell: sudo sh -c 'echo `zabbix_server --version |sed -n 1p` >>/data/logs/install_version.txt'
+    

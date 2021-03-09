@@ -1,7 +1,0 @@
-- name: check_zabbix_server_service
-  debug:
-    var: check_zabbix_server_service.stdout
-
-- name: check_zabbix_agent_service
-  debug:
-    var: check_zabbix_agent_service.stdout

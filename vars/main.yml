@@ -2,56 +2,9 @@ common_os_support: ["CentOS", "Ubuntu", "Amazon"]
 docker_applications: 
   - phpmyadmin
 
-apache_certbot: True
-apache_appname: "zabbix"
-apache_vhost_mode: "www"
-
-mysql_version: "5.7"
+mysql_version: "8.0"
 mysql_root_password: "123456"
 mysql_remote: True
-
-mysql_databases:
- - name: zabbix
-   encoding: utf8
-   collation: utf8_bin
- 
-mysql_users:
- - name: zabbix
-   priv: 'zabbix.*:ALL'
-
-zabbix_php_configuration:
-  - name: max_execution_time
-    value: "300"
-  - name: max_input_time
-    value: "800"
-  - name: memory_limit
-    value: "600M"
-  - name: post_max_size
-    value: "900M"
-  - name: upload_max_filesize
-    value: "900M"
-  - name: max_file_uploads
-    value: "200"
-
-zabbix_meta:
-  release:
-    "5.2": "5.2-1"
-    "5.0": "5.0-1"
-    "4.4": "4.4-1"
-    "4.0": "4.0-2"
-  package:
-    "5.2": 
-      CentOS: [zabbix-agent]
-      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-    "5.0": 
-      CentOS: [zabbix-web-mysql-scl, zabbix-apache-conf-scl,zabbix-server-mysql, zabbix-agent]
-      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-    "4.4": 
-      CentOS: [ zabbix-server-mysql,zabbix-web-mysql,zabbix-agent]
-      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-    "4.0": 
-      CentOS: [ zabbix-server-mysql,zabbix-web-mysql,zabbix-agent]
-      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
     
 init_db: 
   mysql:
@@ -59,8 +12,28 @@ init_db:
     users: ["zabbix"]
     password: "123456" 
     config_paths:
-      - /etc/zabbix/zabbix_server.conf
-    
+      - /data/apps/.env_db_mysql
+      - /data/apps/.env_db_mysql_proxy
+
+init_docker:
+  zabbix:
+    admin_username: Admin
+    admin_password: "zabbix"
+    service_after: "docker.service"
+    compose_path: "/data/wwwroot/zabbix/docker-compose.yml"
+    compose_commands:
+      - 'sudo sed -i "s/MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=$new_password/g" /data/docker-compose.yml'
+      - 'sudo sed -i "s/DB_ROOT_PASSWD=.*/DB_ROOT_PASSWD=$new_password/g" /data/docker-compose.yml'
+      - 'sudo sed -i "s/SEAFILE_ADMIN_PASSWORD=.*/SEAFILE_ADMIN_PASSWORD=$new_password/g" /data/docker-compose.yml'
+    volumes: 
+      - /opt/seafile-mysql
+      - /opt/seafile-data
+    commands: 
+      - sudo sudo sh -c "cat /data/config/onlyoffice.conf 1>> /opt/seafile-data/seafile/conf/seahub_settings.py"
+      - sudo sed -i "s/seafile.example.com/$(curl ifconfig.me)/g" /opt/seafile-data/seafile/conf/seahub_settings.py
+      - sudo sed -i "s/seafile.example.com/$(curl ifconfig.me)/g" /opt/seafile-data/seafile/conf/ccnet.conf
+      - sudo docker restart seafile
+
 init_application:
   zabbix:
     username: Admin
