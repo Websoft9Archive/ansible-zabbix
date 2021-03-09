@@ -6,7 +6,7 @@
 - name: copy .env and docker-compose file
   template: 
     src: '{{item.src}}'
-    dest: '/data/wwwroot/zabbix'
+    dest: '{{item.dest}}'
   with_items:
     - {src: .env_agent,dest: /data/wwwroot/zabbix/.env_agent}
     - {src: .env_db_mysql,dest: /data/wwwroot/zabbix/.env_db_mysql}
