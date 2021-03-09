@@ -4,7 +4,7 @@
     path: /data/wwwroot/zabbix
 
 - name: copy .env and docker-compose file
-  tempalte: 
+  template: 
     src: '{{item.src}}'
     dest: '/data/wwwroot/zabbix'
   with_items:
