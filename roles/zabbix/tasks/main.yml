@@ -8,19 +8,18 @@
     src: '{{item.src}}'
     dest: '/data/wwwroot/zabbix'
   with_items:
-    - .env_agent
-    - .env_db_mysql
-    - .env_db_mysql_proxy
-    - .env_java
-    - .env_prx
-    - .env_prx_mysql
-    - .env_srv
-    - .env_web
-    - 'docker-compose-{{zabbix_version}}.yml'
+    - {src: .env_agent,dest: /data/wwwroot/zabbix/.env_agent}
+    - {src: .env_db_mysql,dest: /data/wwwroot/zabbix/.env_db_mysql}
+    - {src: .env_db_mysql_proxy,dest: /data/wwwroot/zabbix/.env_db_mysql_proxy}
+    - {src: .env_java,dest: /data/wwwroot/zabbix/.env_java}
+    - {src: .env_prx,dest: /data/wwwroot/zabbix/.env_prx}
+    - {src: .env_prx_mysql,dest: /data/wwwroot/zabbix/.env_prx_mysql}
+    - {src: .env_srv,dest: /data/wwwroot/zabbix/.env_srv}
+    - {src: .env_web,dest: /data/wwwroot/zabbix/.env_web}
+    - {src: 'docker-compose-{{zabbix_version}}.yml',dest: /data/wwwroot/zabbix/docker-compose.yml}
 
 - name: Use docker-compose run zabbix
   shell: | 
-    mv docker-compose-{{zabbix_version}}.yml docker-compose.yml
     docker-compose up -d
     sleep 30
   args:
