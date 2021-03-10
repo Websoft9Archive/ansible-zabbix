@@ -12,6 +12,6 @@ init_db:
     users: ["zabbix"]
     password: "123456" 
     config_paths:
-      - /data/apps/.env_db_mysql
-      - /data/apps/.env_db_mysql_proxy
+      - /data/wwwroot/zabbix/.env_db_mysql
+      - /data/wwwroot/zabbix/.env_db_mysql_proxy
 

@@ -3,6 +3,7 @@ services:
  zabbix-server:
   image: zabbix/zabbix-server-mysql:centos-3.0-latest
   container_name: zabbix-server
+  restart: always
   ports:
    - "10051:10051"
   volumes:
@@ -62,6 +63,7 @@ services:
  zabbix-proxy-mysql:
   image: zabbix/zabbix-proxy-mysql:centos-3.0-latest
   container_name: zabbix-proxy
+  restart: always
   ports:
    - "10071:10051"
   volumes:
@@ -114,6 +116,7 @@ services:
  zabbix-web-apache-mysql:
   image: zabbix/zabbix-web-apache-mysql:centos-3.0-latest
   container_name: zabbix-apache
+  restart: always
   ports:
    - "80:8080"
    - "443:8443"
@@ -163,6 +166,7 @@ services:
  zabbix-agent:
   image: zabbix/zabbix-agent:centos-3.0-latest
   container_name: zabbix-agent
+  restart: always
   ports:
    - "10050:10050"
   volumes:
@@ -203,6 +207,7 @@ services:
  zabbix-java-gateway:
   image: zabbix/zabbix-java-gateway:centos-3.0-latest
   container_name: zabbix-java-gateway
+  restart: always
   ports:
    - "10052:10052"
   deploy:
@@ -230,6 +235,7 @@ services:
  zabbix-snmptraps:
   image: zabbix/zabbix-snmptraps:centos-3.0-latest
   container_name: zabbix-snmptraps
+  restart: always
   ports:
    - "162:1162/udp"
   volumes:
