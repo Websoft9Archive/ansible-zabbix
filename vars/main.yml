@@ -23,6 +23,7 @@ init_docker:
     admin_username: Admin
     admin_password: "zabbix"
     service_after: "docker.service"
+    compose_path: "/data/wwwroot/zabbix/docker-compose.yml"
     commands: 
       - mysql -uroot -p"$new_password" -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
       - docker-compose up -f /data/wwwroot/zabbix/docker-compose.yml -d
