@@ -15,3 +15,11 @@ init_db:
       - /data/wwwroot/zabbix/.env_db_mysql
       - /data/wwwroot/zabbix/.env_db_mysql_proxy
 
+init_docker:
+  zabbix:
+    admin_username: Admin
+    admin_password: "zabbix"
+    service_after: "docker.service"
+    compose_path: "/data/apps/pgadmin/docker-compose.yml"
+    compose_commands:
+      - mysql -uroot -p"$new_password" -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
