@@ -3,20 +3,26 @@
     state: directory
     path: /data/wwwroot/zabbix
 
-- name: copy .env and docker-compose file
+- name: Copy mysql environment and zabbix docker-compose file
   template: 
     src: '{{item.src}}'
     dest: '{{item.dest}}'
   with_items:
-    - {src: .env_agent,dest: /data/wwwroot/zabbix/.env_agent}
     - {src: .env_db_mysql,dest: /data/wwwroot/zabbix/.env_db_mysql}
     - {src: .env_db_mysql_proxy,dest: /data/wwwroot/zabbix/.env_db_mysql_proxy}
-    - {src: .env_java,dest: /data/wwwroot/zabbix/.env_java}
-    - {src: .env_prx,dest: /data/wwwroot/zabbix/.env_prx}
-    - {src: .env_prx_mysql,dest: /data/wwwroot/zabbix/.env_prx_mysql}
-    - {src: .env_srv,dest: /data/wwwroot/zabbix/.env_srv}
-    - {src: .env_web,dest: /data/wwwroot/zabbix/.env_web}
     - {src: 'docker-compose-{{zabbix_version}}.yml',dest: /data/wwwroot/zabbix/docker-compose.yml}
+
+- name: Download .env file for zabbix{{zabbix_version}}
+  get_url:
+    url: https://raw.githubusercontent.com/zabbix/zabbix-docker/{{zabbix_version}}/'{{item}}'
+    dest: /data/wwwroot/zabbix/'{{item}}'
+  with_items:
+    - .env_agent
+    - .env_java
+    - .env_prx
+    - .env_prx_mysql
+    - .env_srv
+    - .env_web
 
 - name: Use docker-compose run zabbix
   shell: | 
