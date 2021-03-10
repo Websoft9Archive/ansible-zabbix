@@ -23,3 +23,15 @@ CentOS7 与 CentOS8 有一些差异，项目的元数据库默认已 CentOS8 为
 
 
 ## 配置
+
+## 随机密码
+
+### 方案一： 直接通过数据库的 md5 后的密码
+
+### 方案二：摘取源码中的密码相关程序，运行后得到密码
+```
+      - sudo touch /credentials/hashpasswd.php
+      - sudo echo "<?php \$options = [ 'cost' => 10, ]; echo password_hash('"$new_password"', PASSWORD_BCRYPT, \$options); ?>" > /credentials/hashpasswd.php
+      - pawd=$(/usr/bin/php /credentials/hashpasswd.php)
+      - mysql -uroot -p"$new_password" -h localhost -D zabbix -e "update users set passwd='$pawd' where name='Zabbix'"
+```
