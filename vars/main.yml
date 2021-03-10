@@ -15,8 +15,7 @@ init_db:
       - /data/wwwroot/zabbix/.env_db_mysql
       - /data/wwwroot/zabbix/.env_db_mysql_proxy
     commands:
-      - mysql -uroot -p"$new_password" -e "drop database zabbix"
-      - mysql -uroot -p"$new_password" -e "drop database zabbix_proxy"
+
 
 init_docker:
   zabbix:
@@ -24,6 +23,9 @@ init_docker:
     admin_password: "zabbix"
     service_after: "docker.service"
     compose_path: "/data/wwwroot/zabbix/docker-compose.yml"
+    compose_commands:
+      - mysql -uroot -p"$new_password" -e "drop database zabbix"
+      - mysql -uroot -p"$new_password" -e "drop database zabbix_proxy"
     commands: 
       - mysql -uroot -p"$new_password" -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
-      - docker-compose up -f /data/wwwroot/zabbix/docker-compose.yml -d
+      - docker-compose -f /data/wwwroot/zabbix/docker-compose.yml up -d
