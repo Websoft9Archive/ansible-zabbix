@@ -14,8 +14,8 @@
 
 - name: Download .env file for zabbix{{zabbix_version}}
   get_url:
-    url: https://raw.githubusercontent.com/zabbix/zabbix-docker/{{zabbix_version}}/'{{item}}'
-    dest: /data/wwwroot/zabbix/'{{item}}'
+    url: https://raw.githubusercontent.com/zabbix/zabbix-docker/{{zabbix_version}}/{{item}}
+    dest: /data/wwwroot/zabbix/{{item}}
   with_items:
     - .env_agent
     - .env_java
