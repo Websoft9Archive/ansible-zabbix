@@ -9,11 +9,11 @@
 
   vars_prompt:
     - name: 'zabbix_version_selection'
-      prompt: "\nWhich Zabbix distribution do you want to use? [ 1/2 ] \n\n
-      1: Zabbix 5.2(only support ubuntu )\n
+      prompt: "\nWhich Zabbix distribution do you want to use? [ 1/2/3/4 ] \n\n
+      1: Zabbix 5.2\n
       2: Zabbix 5.0\n
-      3: Zabbix 4.4\n
-      4: Zabbix 4.0\n"
+      3: Zabbix 4.0\n
+      4: Zabbix 3.0\n"
       private: no
       default: 1
 
@@ -21,16 +21,20 @@
     zabbix_version_select:
       '1': '5.2'
       '2': '5.0'
-      '3': '4.4'
-      '4': '4.0'
+      '3': '4.0'
+      '4': '3.0'
 
     zabbix_version: "{{zabbix_version_select[zabbix_version_selection]}}" 
     zabbix_db_root_password: "{{mysql_root_password}}"
+  pre_tasks: 
+    - set_fact: 
+        mysql_version: "5.7"
+      when: zabbix_version == "3.0"
+        
 
   roles:
     - { role: role_common, tags: "role_common"} 
     - { role: role_cloud, tags: "role_cloud" }
-    - { role: role_apache, tags: "role_apache" }
     - { role: role_mysql, tags: "role_mysql" }
     - { role: role_docker, tags: "role_docker" }
     - { role: zabbix, tags: "zabbix"}

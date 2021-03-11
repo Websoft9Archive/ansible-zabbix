@@ -1,7 +1,3 @@
-- name: check_zabbix_server_service
+- name:  check_dockerapp_service
   debug:
-    var: check_zabbix_server_service.stdout
-
-- name: check_zabbix_agent_service
-  debug:
-    var: check_zabbix_agent_service.stdout
+    var: check_dockerapp_service.stdout_lines

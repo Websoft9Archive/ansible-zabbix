@@ -1,5 +1,6 @@
-
-# 5.0 | 4.4 | 4.0
+# 5.2 | 5.0 | 4.0 | 3.0
 zabbix_version: "5.2"
 
 zabbix_db_root_password: "123456"
+zabbix_db_password: "123456"
+zabbix_db_host: "172.17.0.1"

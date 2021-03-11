@@ -2,56 +2,9 @@ common_os_support: ["CentOS", "Ubuntu", "Amazon"]
 docker_applications: 
   - phpmyadmin
 
-apache_certbot: True
-apache_appname: "zabbix"
-apache_vhost_mode: "www"
-
-mysql_version: "5.7"
+mysql_version: "8.0"
 mysql_root_password: "123456"
 mysql_remote: True
-
-mysql_databases:
- - name: zabbix
-   encoding: utf8
-   collation: utf8_bin
- 
-mysql_users:
- - name: zabbix
-   priv: 'zabbix.*:ALL'
-
-zabbix_php_configuration:
-  - name: max_execution_time
-    value: "300"
-  - name: max_input_time
-    value: "800"
-  - name: memory_limit
-    value: "600M"
-  - name: post_max_size
-    value: "900M"
-  - name: upload_max_filesize
-    value: "900M"
-  - name: max_file_uploads
-    value: "200"
-
-zabbix_meta:
-  release:
-    "5.2": "5.2-1"
-    "5.0": "5.0-1"
-    "4.4": "4.4-1"
-    "4.0": "4.0-2"
-  package:
-    "5.2": 
-      CentOS: [zabbix-agent]
-      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-    "5.0": 
-      CentOS: [zabbix-web-mysql-scl, zabbix-apache-conf-scl,zabbix-server-mysql, zabbix-agent]
-      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-    "4.4": 
-      CentOS: [ zabbix-server-mysql,zabbix-web-mysql,zabbix-agent]
-      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
-    "4.0": 
-      CentOS: [ zabbix-server-mysql,zabbix-web-mysql,zabbix-agent]
-      Ubuntu:  [zabbix-server-mysql,zabbix-frontend-php,zabbix-agent,zabbix-apache-conf]
     
 init_db: 
   mysql:
@@ -59,15 +12,20 @@ init_db:
     users: ["zabbix"]
     password: "123456" 
     config_paths:
-      - /etc/zabbix/zabbix_server.conf
-    
-init_application:
+      - /data/wwwroot/zabbix/.env_db_mysql
+      - /data/wwwroot/zabbix/.env_db_mysql_proxy
+
+
+init_docker:
   zabbix:
-    username: Admin
-    password: "zabbix"
-    service_after: mysql.service
+    admin_username: Admin
+    admin_password: "zabbix"
+    service_after: "docker.service"
+    compose_path: "/data/wwwroot/zabbix/docker-compose.yml"
+    compose_commands:
+      - sudo mysql -uroot -p"$new_password" -e "drop database zabbix"
+      - sudo mysql -uroot -p"$new_password" -e "drop database zabbix_proxy"
     commands: 
-      - sudo touch /credentials/hashpasswd.php
-      - sudo echo "<?php \$options = [ 'cost' => 10, ]; echo password_hash('"$new_password"', PASSWORD_BCRYPT, \$options); ?>" > /credentials/hashpasswd.php
-      - pawd=$(/usr/bin/php /credentials/hashpasswd.php)
-      - mysql -uroot -p"$new_password" -h localhost -D zabbix -e "update users set passwd='$pawd' where name='Zabbix'"
+      - sleep 20
+      - sudo mysql -uroot -p"$new_password" -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
+      - sudo docker-compose -f /data/wwwroot/zabbix/docker-compose.yml up -d
