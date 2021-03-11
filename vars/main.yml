@@ -23,7 +23,8 @@ init_docker:
     service_after: "docker.service"
     compose_path: "/data/wwwroot/zabbix/docker-compose.yml"
     compose_commands:
-      - mysql -uroot -p"$new_password" -e "drop database zabbix"
-      - mysql -uroot -p"$new_password" -e "drop database zabbix_proxy"
+      - sudo mysql -uroot -p"$new_password" -e "drop database zabbix"
+      - sudo mysql -uroot -p"$new_password" -e "drop database zabbix_proxy"
     commands: 
-      - mysql -uroot -p"$new_password" -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
+      - sudo mysql -uroot -p"$new_password" -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
+      - sudo docker-compose -f /data/wwwroot/zabbix/docker-compose.yml up -d
