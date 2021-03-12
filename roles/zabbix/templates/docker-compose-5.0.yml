@@ -229,7 +229,7 @@ services:
 networks:
   default:
     external:
-      name: zabbix
+      name: "apps"
 
 volumes:
   snmptraps:
