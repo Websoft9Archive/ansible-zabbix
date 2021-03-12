@@ -37,16 +37,6 @@ services:
   depends_on:
    - zabbix-java-gateway
    - zabbix-snmptraps
-  networks:
-   zbx_net_backend:
-     aliases:
-      - zabbix-server
-      - zabbix-server-mysql
-      - zabbix-server-centos-mysql
-      - zabbix-server-mysql-centos
-   zbx_net_frontend:
-#  devices:
-#   - "/dev/ttyUSB0:/dev/ttyUSB0"
   stop_grace_period: 30s
   sysctls:
    - net.ipv4.ip_local_port_range=1024 65000
@@ -98,13 +88,6 @@ services:
   depends_on:
    - zabbix-java-gateway
    - zabbix-snmptraps
-  networks:
-   zbx_net_backend:
-    aliases:
-     - zabbix-proxy-mysql
-     - zabbix-proxy-centos-mysql
-     - zabbix-proxy-mysql-centos
-   zbx_net_frontend:
   stop_grace_period: 30s
   labels:
    com.zabbix.description: "Zabbix proxy with MySQL database support"
@@ -145,13 +128,6 @@ services:
    timeout: 5s
    retries: 3
    start_period: 30s
-  networks:
-   zbx_net_backend:
-    aliases:
-     - zabbix-web-apache-mysql
-     - zabbix-web-apache-centos-mysql
-     - zabbix-web-apache-mysql-centos
-   zbx_net_frontend:
   stop_grace_period: 10s
   sysctls:
    - net.core.somaxconn=65535
@@ -191,12 +167,6 @@ services:
    - .env_agent
   privileged: true
   pid: "host"
-  networks:
-   zbx_net_backend:
-    aliases:
-     - zabbix-agent
-     - zabbix-agent-passive
-     - zabbix-agent-centos
   stop_grace_period: 5s
   labels:
    com.zabbix.description: "Zabbix agent"
@@ -220,11 +190,6 @@ services:
       memory: 256M
   env_file:
    - .env_java
-  networks:
-   zbx_net_backend:
-    aliases:
-     - zabbix-java-gateway
-     - zabbix-java-gateway-centos
   stop_grace_period: 5s
   labels:
    com.zabbix.description: "Zabbix Java Gateway"
@@ -248,11 +213,6 @@ services:
     reservations:
       cpus: '0.25'
       memory: 128M
-  networks:
-   zbx_net_frontend:
-    aliases:
-     - zabbix-snmptraps
-   zbx_net_backend:
   stop_grace_period: 5s
   labels:
    com.zabbix.description: "Zabbix snmptraps"
@@ -261,23 +221,9 @@ services:
    com.zabbix.os: "centos"
 
 networks:
-  zbx_net_frontend:
-    driver: bridge
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.16.238.0/24
-  zbx_net_backend:
-    driver: bridge
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
-    internal: true
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.16.239.0/24
+  default:
+    external:
+      name: zabbix
 
 volumes:
   snmptraps:
