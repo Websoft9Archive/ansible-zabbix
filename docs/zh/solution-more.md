@@ -73,3 +73,18 @@ Zabbix 默认已经内置多种语言包，但 Zabbix 的语言包依赖于操�
    ![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/en/zabbix/zabbix-changelang-websoft9.png)
 
 参考官方字符编码安装方案：[https://zabbix.org/wiki/How_to/install_locale](https://zabbix.org/wiki/How_to/install_locale)
+
+## 安装客户端
+
+1. 安装 [Zabbix-agent](https://www.zabbix.com/download?zabbix=5.0&os_distribution=centos&os_version=7&db=mysql&ws=apache) 
+   ```shell
+   rpm -Uvh https://repo.zabbix.com/zabbix/<ZABBIX_VERSION>/rhel/7/x86_64/zabbix-release-<ZABBIX_VERSION>-1.el7.noarch.rpm
+   yum install zabbix-agent -y
+   ```
+
+2. 配置 /etc/zabbix/zabbix_agentd.conf
+   ```
+   Server=SERVER_IP   
+   ServerActive=SERVER_IP (服务端ip)   
+   Hostname=zabbix_web (客户端主机名)   
+   ```

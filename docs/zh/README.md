@@ -8,7 +8,7 @@ home: false
 
 [Zabbix](https://www.zabbix.com/cn) 是一个开源的企业级监控解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标。支持分布式架构，通过统一的 Web 界面监控自动监控大型动态环境。
 
-![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-structure-websoft9.png)
+![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-gui-websoft9.png)
 
 ## 改进
 

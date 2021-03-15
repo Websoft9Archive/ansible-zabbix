@@ -10,61 +10,35 @@
 
 ## Zabbix 安装向导
 
-1. 使用本地电脑的 Chrome 或 Firefox 浏览器访问网址：*http://域名/zabbix* 或 *http://服务器公网IP/zabbix*, 就进入引导首页
-   ![开始安装 Zabbix](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installwel-websoft9.png)
+1. 使用本地电脑的 Chrome 或 Firefox 浏览器访问网址：*http://域名* 或 *http://服务器公网IP*, 进入登录界面
+   ![Zabbix 登录界面](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-login-websoft9.png)
 
-   **如果默认打开就是登陆界面**，请直接查看（[默认账号](/zh/stack-accounts.html#zabbix)） 后登录使用
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-login-websoft9.png)
-
-2. 检测环境是否满足安装要求
-   ![安装 Zabbix](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installcheck-websoft9.png)
-
-3. 安装进入数据库配置界面（[不知道数据库密码？](/zh/stack-accounts.html#mysql)），然后进入下一步
-   ![安装 Zabbix](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installdb-websoft9.png)
-
-4. Zabbix Server 设置（保持默认设置即可）
-   ![安装 Zabbix](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installserver-websoft9.png)
-
-5. 安装前信息确认  
-   ![安装 Zabbix](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installsy-websoft9.png)
-
-6. 安装完成提示信息  
-   ![安装 Zabbix](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installss-websoft9.png)
-
-7. 登录 Zabbix 后台（[默认账号](/zh/stack-accounts.html#zabbix)）  
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-login-websoft9.png)
-
-8. 登录成功，体验后台
+2. 输入账号密码后登录到后台（[不知道账号密码？](/zh/stack-accounts.html#mysql)）
    ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-dashboard-websoft9.png)
 
-9. 进入用户管理界面，更换所需的语言（如果语言为灰色状态，参考[启用语言方案](/zh/solution-more.md#zabbix-多语言)）
+3. 打开用户管理界面，更换所需的语言（如果语言为灰色状态，参考[启用语言方案](/zh/solution-more.md#zabbix-多语言)）
    ![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/en/zabbix/zabbix-changelang-websoft9.png)  
    ![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-dashboardzh-websoft9.png)
 
-## zabbix-agent安装向导
-1. 在您需要监控的机器上[安装](https://www.zabbix.com/download?zabbix=5.0&os_distribution=centos&os_version=7&db=mysql&ws=apache)zabbix-agent
-```shell
-rpm -Uvh https://repo.zabbix.com/zabbix/<ZABBIX_VERSION>/rhel/7/x86_64/zabbix-release-<ZABBIX_VERSION>-1.el7.noarch.rpm
-yum install zabbix-agent -y
-```
+## Zabbix 入门向导
 
-2. 配置zabbix-agent(按需修改如下配置)  
+下面继续上一节，通过连接一个客户端的实际应用场景，帮助用户快速入门。  
 
-vim /etc/zabbix/zabbix_agentd.conf      
-Server=SERVER_IP   
-ServerActive=SERVER_IP (服务端ip)   
-Hostname=zabbix_web (客户端主机名)   
+1. 使用SSH连接 Zabbix 服务器
 
-3. 登入zabbix服务端界面   
+2. 获取服务器上 Zabbix-Agent 容器虚拟机的IP（用于演示并监控服务器自身）
+   ```
+   docker inspect zabbix-agent | grep IPAddress
+   ```
+   > 若监控其他服务器，需先[安装Zabbix-Agent](/zh/solution-more.md#安装客户端)，然后参数上述步骤
 
-使用本地电脑的 Chrome 或 Firefox 浏览器访问网址：*http://域名/zabbix* 或 *http://服务器公网IP/zabbix*, 进入引导首页后,进行如下操作:
-首先,您需要创建主机
-![Zabbix 添加主机](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addhost-websoft9.png)
-![Zabbix 添加主机](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addhost2-websoft9.png)
-其次,添加模板配置监控项
-![Zabbix 添加模板](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-updatetemplate-websoft9.png)
-验证安装,出现如下界面,即为安装成功
-![Zabbix 验证安装](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-addok-websoft9.png)
+3. 登录到 Zabbix 控制台后， 依次打开：【配置】>【主机】，打开主机列表
+   ![Zabbix 添加主机](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-edithost001-websoft9.png)
+
+4. 输入第二步获取的 IP 地址，保存配置
+   ![Zabbix 添加主机](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-edithost002-websoft9.png)
+
+5. 回到主机列表页，启用主机监控，当主机【可用性】列变成**绿色**即表明监控已成功
 
 > 需要了解更多 Zabbix 的使用，请参考官方文档：[Zabbix Documentation](https://www.zabbix.com/documentation/current/)
 
@@ -72,11 +46,15 @@ Hostname=zabbix_web (客户端主机名)
 
 #### 浏览器无法访问 Zabbix（白屏没有结果）？
 
-您的服务器对应的安全组80端口没有开启（入规则），导致浏览器无法访问到服务器的任何内容
+您的服务器对应的安全组 80 端口没有开启（入规则），导致浏览器无法访问到服务器的任何内容
+
+#### 端口已经开启，*http://服务器公网IP* 仍然无法访问 Zabbix？
+
+您使用的非容器部署方案，请参考[此处](/zh/stack-installationold.md)
 
 #### 本部署包采用的哪个数据库来存储 Zabbix 数据？
 
-MariaDB（ MySQL 分支）
+MySQL
 
 #### 是否可以采用云厂商提供的 RDS 来存储 Zabbix 数据？
 

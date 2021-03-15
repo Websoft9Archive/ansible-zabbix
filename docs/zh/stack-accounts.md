@@ -9,10 +9,7 @@
 ## Zabbix
 
 * 管理员用户名：`Admin`  
-* 管理员密码：`zabbix` 或 存储在您的服务器中的文件中 */credentials/password.txt*  
-
-登录地址：*http://服务器公网IP/zabbix*
-
+* 管理员密码：存储在您的服务器中的文件中 */credentials/password.txt*  
 
 ## MySQL
 

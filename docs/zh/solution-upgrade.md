@@ -22,23 +22,25 @@ yum update -y
 ```
 > 本部署包已预配置一个用于自动更新的计划任务。如果希望去掉自动更新，请删除对应的Cron
 
-## Zabbix 更新
-
-如果要更新 Zabbix 的次要版本（例如，从 4.0.1 升级至 4.0.3），是非常容易的：
-
-```
-## 更新 Zabbix 所有组件
-sudo apt install --only-upgrade 'zabbix.*'
-
-## 更新 Zabbix server
-sudo apt install --only-upgrade 'zabbix-server.*'
-
-## 更新 Zabbix agent 
-sudo apt install --only-upgrade 'zabbix-agent.*'
-```
-
 ## Zabbix 升级
 
-Zabbix 升级是指从低版本升到高版本，例如 3.0 to 4.0
+Zabbix 升级原理非常简单：先拉取最新版本的 Zabbix 镜像，然后重新运行容器。
 
-与升级有关的详细方案，请参考官方文档：[Zabbix 升级步骤](https://www.zabbix.com/documentation/4.0/zh/manual/installation/upgrade)
+> Zabbix 升级之前请完成服务器的快照备份，以防不测。
+
+1. 使用 SSH 登录 Zabbix 服务器后，拉取最新版本镜像
+   ```
+   docker image pull zabbix/zabbix-server-mysql:centos-5.2-latest 
+   docker image pull zabbix/zabbix-proxy-mysql:centos-5.2-latest
+   docker image pull zabbix/zabbix-web-apache-mysql:centos-5.2-latest
+   docker image pull zabbix/zabbix-java-gateway:centos-5.2-latest
+   docker image pull zabbix/zabbix-snmptraps:centos-5.2-latest
+   ```
+2. 重新运行 docker-compose 编排文件，启用新的容器
+    ```
+    cd /data/wwwroot/zabbix
+    docker-compose up -d
+    ```
+3. 登录 Zabbix 后台查看升级后的版本
+
+与升级有关的详细配置方案，请参考官方文档：[INSTALLATION FROM CONTAINERS](https://www.zabbix.com/documentation/5.0/manual/installation/containers)

@@ -4,6 +4,14 @@
 
 支持多语言（包含中文），通过[后台设置](/zh/solution-more.html#zabbix-语言包)即可
 
+#### 本部署方案是如何安装 Zabbix 的？
+
+采用 Docker 安装以适用云原生时代
+
+#### Docker 安装是否会丢失数据？
+
+Zabbix 代码和运行文件已经采用持久存储，数据库 MySQL 是基于非容器部署
+
 #### Zabbix 有哪些组件？
 
 Zabbix 是一个解决方案，包含了：Zabbix-Server，Zabbix-Web，Zabbix-Proxy，Zabbix-Agent，Zabbix-java-gateway等组件。  
