@@ -37,6 +37,7 @@
     - { role: role_cloud, tags: "role_cloud" }
     - { role: role_mysql, tags: "role_mysql" }
     - { role: role_docker, tags: "role_docker" }
+    - { role: role_nginx, tags: "role_nginx" }
     - { role: zabbix, tags: "zabbix"}
     - { role: role_init, tags: "role_init"}
     - { role: role_preend, tags: "role_preend"}
