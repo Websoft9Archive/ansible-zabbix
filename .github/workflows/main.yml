@@ -28,5 +28,5 @@ jobs:
       with:
         source_dir: docs/html
         container_name: $web
-        connection_string: ${{ secrets.Azure_blob }}
+        connection_string: ${{ secrets.Azure_blob2 }}
         extra_args: '--destination-path docs'
