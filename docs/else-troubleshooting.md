@@ -21,6 +21,10 @@ df -lh
 free -lh
 ```
 
-#### Apache httpd service restart error
+#### Zabbix can't connect MySQL when modify the password of database?
 
-Please make sure the vhost.conf is correct for you, and you can track and analyze log files
+Refer to [replace-database](/solution-more.md#replace-database)
+
+#### Zabbix-server service failed?
+
+Run the command `sudo docker logs zabbix-server` to check logs  

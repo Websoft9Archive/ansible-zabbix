@@ -28,7 +28,7 @@ Automation Backups for Instance is using the **Snapshot** or **Cloud Server Back
 - Backup scope: All data on a Disk
 - Backup effect: Very Good
 - Backup frequency: Automatic backup per hour if you need
-- Recovery methond: One key recovery on Cloud platform
+- Recovery method: One key recovery on Cloud platform
 - Skill requirement: Very easy 
 - Automation or Manual: Fully automated on backup strategy
 ```
@@ -43,13 +43,13 @@ Manual backup for application is based on the **Exporting source code and databa
 - Backup scope: Source code and database of application
 - Backup effect: Good
 - Backup frequency: You can operate when you need
-- Recovery methond: Import
+- Recovery method: Import
 - Skill requirement: Easy 
 - Automation: manual
 ```
 The general manual backup operation steps are as follows:
 
-1. Compress and download the entire */etc/zabbix* directory by SFTP 
-2. Export Zabbix's database
+1. Compress and download the entire */data/wwwroot/zabbix* directory by SFTP 
+2. Export Zabbix's database ny phpMyAdmin
 3. Put the source code file, data file and database file in the same folder, named according to the date
 4. Backup completed

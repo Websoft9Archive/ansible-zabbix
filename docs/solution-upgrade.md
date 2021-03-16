@@ -8,7 +8,7 @@ You should know the differences between the terms **Update** and **Upgrade**([Ex
 
 For Zabbix maintenance, focus on the following two Update & Upgrade jobs
 
-- Sytem update(Operating System and Running Environment) 
+- System update(Operating System and Running Environment) 
 - Zabbix upgrade 
 
 ## System Update
@@ -24,21 +24,25 @@ yum update -y
 ```
 > This deployment package is preconfigured with a scheduled task for automatic updates. If you want to remove the automatic update, please delete the corresponding Cron
 
-## Zabbix Update
-
-It is very easy for updating Zabbix(e.g. 4.0.1 to 4.0.3):
-
-```
-## update all Zabbix components
-sudo apt install --only-upgrade 'zabbix.*'
-
-## update Zabbix server
-sudo apt install --only-upgrade 'zabbix-server.*'
-
-## update Zabbix agent 
-sudo apt install --only-upgrade 'zabbix-agent.*'
-```
-
 ## Zabbix Upgrade
 
-Zabbix upgrade(e.g. 3.0 to 4.0) is difficult than update, more upgrade details please refer to official documentation: [Zabbix Upgrade](https://www.zabbix.com/documentation/4.0/zh/manual/installation/upgrade)
+You can upgrade Zabbix by Docker very easy
+
+> Please backup all Zabbix data and database before upgrade
+
+1. Use **SSH** to connect Zabbix instance and pull the latest image
+   ```
+   docker image pull zabbix/zabbix-server-mysql:centos-5.2-latest 
+   docker image pull zabbix/zabbix-proxy-mysql:centos-5.2-latest
+   docker image pull zabbix/zabbix-web-apache-mysql:centos-5.2-latest
+   docker image pull zabbix/zabbix-java-gateway:centos-5.2-latest
+   docker image pull zabbix/zabbix-snmptraps:centos-5.2-latest
+   ```
+2. Run the docker compose file to recreate container
+    ```
+    cd /data/wwwroot/zabbix
+    docker-compose up -d
+    ```
+3. Login to Zabbix console to check upgrade
+
+More upgrade detail, refer to: [INSTALLATION FROM CONTAINERS](https://www.zabbix.com/documentation/5.0/manual/installation/containers)

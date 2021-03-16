@@ -11,68 +11,46 @@
 Zabbix 域名绑定操作步骤：
 
 1. 使用 SFTP 工具登录云服务器
-2. 修改 [虚拟机主机配置文件](/zh/stack-components.md#apache)，将其中的域名相关的值
+
+2. 修改 [虚拟机主机配置文件](/zh/stack-components.md#nginx)，将其中的域名相关的值
    ```text
-     <VirtualHost *:80>
-     ServerName www.example.com # 修改成您的实际域名
+   server_name    localhost; # 改为自定义域名
    ```
-3. 保存配置文件，[重启 Apache 服务](/zh/admin-services.md#apache)
-
-## 修改密码
-
-如果在 Zabbix 运行中修改了数据库用户 zabbix 的密码，就会导致 Zabbix 无法连接数据库此时需要修改两处：
-
-1. 修改 Zabbix 前端配置文件：*/etc/zabbix/web/zabbix.conf.php*，将 $DB['PASSWORD'] 对应的值修改为你的新密码
-   ```
-   // Zabbix GUI configuration file.
-   $DB['TYPE']				= 'MYSQL';
-   $DB['SERVER']			= 'localhost';
-   $DB['PORT']				= '0';
-   $DB['DATABASE']			= 'zabbix';
-   $DB['USER']				= 'zabbix';
-   $DB['PASSWORD']			= '123456';
-   ```
-
-2. 修改 Zabbix 服务端配置文件：*/etc/zabbix/zabbix_server.conf*，将 $DB['PASSWORD'] 对应的值修改为你的新密码
-   ```
-   # Default:
-   DBPassword=6GM2ylUizRo2h7c
-   ```
-3. 重启服务后生效
-   ```
-   sudo systemctl restart zabbix-server
-   ```
-
-## Zabbix 多语言
-
-Zabbix 默认已经内置多种语言包，但 Zabbix 的语言包依赖于操作系统对应的字符编码设置。
-
-下面以开启中文字符编码为例进行详细说明：
-
-1. 登录 Zabbix 所在的服务器，运行下面的命令之一
-   ```
-   ##方案一
-   locale-gen zh_CN.UTF-8
-
-   ##方案二
-   dpkg-reconfigure locales
-   ```
-
-   如果运行**方案二**，请参考下图选择 **zh_CN.UTF-8 UTF-8** 编码规则（键盘空格键选定，Tab键切换位置）
-
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-localescn-websoft9.png)
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-localescndef-websoft9.png)
    
+3. 保存配置文件，[重启 Nginx 服务](/zh/admin-services.md#nginx)
 
-2. 重启服务
+## 更换数据库
+
+默认部署方案中，采用的是本地安装的 MySQL 数据库。如果您打算更换数据库，请参考如下步骤：
+
+1. 导出 zabbix, zabbix-proxy 数据库
+
+2. 使用 SFTP 连接到服务器，编辑与数据库连接相关的两个文件
+
+   * /data/wwwroot/zabbix/.env_db_mysql_proxy
+   * /data/wwwroot/zabbix/.env_db_mysql
+
+3. 分别修改两个文件中的数据库连接信息，保存
+
+4. 重新运行容器后生效
    ```
-   service apache2 restart
+   cd /data/wwwroot/zabbix
+   sudo docker compose up -d
    ```
 
-3. 此时重新登录 Zabbix 后台，中文语言由灰色变成了可选
-   ![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/en/zabbix/zabbix-changelang-websoft9.png)
+5. 导入备份数据到新的数据库中
 
-参考官方字符编码安装方案：[https://zabbix.org/wiki/How_to/install_locale](https://zabbix.org/wiki/How_to/install_locale)
+## 多语言
+
+Zabbix 默认已经内置多种语言包，非常方便进行在线切换。
+
+1. 登录到 Zabbix 后台
+
+2. 依次打开：【管理】>【用户】，编辑用户信息管理界面，更换所需的语言
+   ![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/en/zabbix/zabbix-changelang-websoft9.png)  
+   ![Zabbix 更换语言](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-dashboardzh-websoft9.png)
+
+> 如果语言为灰色状态,参考官方字符编码安装方案：[How to install locale](https://zabbix.org/wiki/How_to/install_locale)
 
 ## 安装客户端
 
@@ -87,4 +65,26 @@ Zabbix 默认已经内置多种语言包，但 Zabbix 的语言包依赖于操�
    Server=SERVER_IP   
    ServerActive=SERVER_IP (服务端ip)   
    Hostname=zabbix_web (客户端主机名)   
+   ```
+
+## 重置密码
+
+常用的 Zabbix 重置密码相关的操作主要有修改密码和找回密码两种类型：
+
+### 修改密码
+
+1. 登录 Zabbix 后台，依次打开：【管理】>【用户】，编辑目标用户
+  ![Zabbix 修改密码](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-modifypw-websoft9.png)
+
+2. 点击【修改密码】
+
+### 找回密码
+
+如果用户忘记了密码，需要通过修改数据库相关字段来重置密码：
+
+1. 登录 [phpMyAdmin](/zh/admin-mysql.md)，进入 Zabbix 数据库
+
+2. 在 SQL 窗口运行重置密码的命令
+   ```
+   sudo mysql -uroot -p new_password -e "update zabbix.users set passwd=md5(new_password) where alias='Admin';"
    ```

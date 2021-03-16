@@ -6,17 +6,18 @@
 
 #### 修改了数据库密码 Zabbix 不能访问？
 
-若已完成 Zabbix 安装向导，再通过 phpMyAdmin 修改数据库密码，Zabbix 就会连不上数据库
+若已完成 Zabbix 安装向导，再通过 phpMyAdmin 修改数据库密码，Zabbix 就会连不上数据库。  
 
-需要修改 [Zabbix 配置文件](/zh/stack-components.md#zabbix) 对应的数据库 DBpassword 参数即可。
+1. 使用 SFTP 连接服务器，修改两个 [Zabbix 数据库配置](/zh/stack-components.md#zabbix) 文件中的密码。  
 
-#### ERROR 1045 (28000): Access denied for user 'zabbix'@'localhost' (using password: YES)?
+2. 重新运行容器
+   ```
+   cd /data/wwwroot/zabbix
+   sudo docker compose up -d
+   ```
+#### Zabbix-server 服务无法启动？
 
-同上
-
-#### Apache 服务无法启动？
-
-请通过分析日志文件定位原因： */var/log/apache2*
+运行 `sudo docker logs zabbix-server` 查询运行日志。  
 
 #### 数据库服务无法启动
 
@@ -29,5 +30,9 @@ df -lh
 
 # 查看内存使用
 free -lh
+
+# 查看服务状态和日志
+sudo systemctl status mysql
+sudo journalctl -u mysql
 ```
 

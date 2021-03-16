@@ -6,20 +6,21 @@
 
 #### 本部署方案是如何安装 Zabbix 的？
 
-采用 Docker 安装以适用云原生时代
+采用 Docker 安装，以适用云原生时代
 
 #### Docker 安装是否会丢失数据？
 
 Zabbix 代码和运行文件已经采用持久存储，数据库 MySQL 是基于非容器部署
 
-#### Zabbix 有哪些组件？
+#### Zabbix 中有哪些组件？
 
-Zabbix 是一个解决方案，包含了：Zabbix-Server，Zabbix-Web，Zabbix-Proxy，Zabbix-Agent，Zabbix-java-gateway等组件。  
+包含：Zabbix-Server，Zabbix-Web，Zabbix-Proxy，Zabbix-Agent，Zabbix-java-gateway等组件。  
+
 Zabbix-Web 是可视化的 Web 控制台，与 Zabbix-Server 是分离的。
 
-#### 部署包中是否默认预装了 Zabbix-Proxy？
+#### Zabbix-Proxy是用来干什么的？
 
-没有预装 Zabbix-Proxy，Proxy 适合于 Zabbix 分布式部署架构中从 Zabbix-Agent 采集数据，用于减轻 Zabbix-Server 的压力。
+Proxy 适合于 Zabbix 分布式部署架构中从 Zabbix-Agent 采集数据，用于减轻 Zabbix-Server 的压力。
 
 #### Zabbix-Sender是什么？
 
@@ -27,23 +28,23 @@ Zabbix sender 是一个命令行应用程序，可用于将性能数据发送到
 
 #### Zabbix-Git是什么？
 
-Zabbix get 是一个命令行应用，它可以用于与 Zabbix agent 进行通信，并从 Zabbix agent 那里获取所需的信息。
+Zabbix get 是一个可以用于与 Zabbix agent 进行通信的命令行，并从 Zabbix agent 那里获取信息。
 
 #### 是否可以使用云平台的 RDS 作为 Zabbix 的数据库？
 
-不建议使用非服务器上的第三方数据库
+可以
 
-#### Zabbix-Server 能在Windows服务器上部署吗？
+#### Zabbix-Server 能在 Windows 服务器上部署吗？
 
 官方没有提供 Windows 上的安装方案
 
 #### Zabbix数据库连接配置信息在哪里？
 
-数据库配置信息 [Zabbix 配置文件](/zh/stack-components.html#zabbix)中
+数据库配置信息 [Zabbix 环境变量](/zh/stack-components.html#zabbix)中
 
 #### 如果没有域名是否可以部署 Zabbix？
 
-可以，访问`http://服务器公网IP/zabbix` 即可
+可以，访问`http://服务器公网IP` 即可
 
 #### 数据库 root 用户对应的密码是多少？
 

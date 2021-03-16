@@ -25,7 +25,10 @@ cacb13aa8f36   zabbix/zabbix-java-gateway:centos-5.2-latest       "docker-entryp
 Zabbix 安装目录: */data/zabbix*  
 Zabbix 配置文件（环境变量）: */data/zabbix/.env.xxx*    
 Docker Compose 配置文件：*/data/wwwroot/zabbix/docker-compose.yml*     
-Zabbix 持久存储：*/data/wwwroot/zabbix/zbx_env*  
+Zabbix 持久存储：*/data/wwwroot/zabbix/zbx_env  
+Zabbix-Web 数据库配置：*/data/wwwroot/zabbix/.env_db_mysql*  
+Zabbix-Proxy 数据库配置：*/data/wwwroot/zabbix/.env_db_mysql_proxy*   
+
 
 > Zabbix 配置文件中包含数据库连接信息，更改了 MySQL 数据库账号密码，此处也需要对应修改
 
@@ -66,7 +69,7 @@ Docker daemon.json 文件：默认没有创建，请到 */etc/docker* 目录下�
 | 名称 | 端口号 | 用途 |  必要性 |
 | --- | --- | --- | --- |
 | HTTP | 80 | 通过 HTTP 访问 Zabbix | 必须 |
-| HTTP | 10051 | 通过端口访问 Zabbix  | 可选 |
+| HTTP | 9006 | 通过端口访问 Zabbix  | 可选 |
 | HTTPS | 443 | 通过 HTTPS 访问 Zabbix | 可选 |
 | MySQL | 3306 | 远程连接 MySQL | 可选 |
 
@@ -84,6 +87,9 @@ lsb_release -a
 
 # Docker version
 docker -v
+
+# MySQL version
+mysql -v
 
 # Zabbix version:
 docker images |grep zabbix-server

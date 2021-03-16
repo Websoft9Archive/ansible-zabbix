@@ -8,7 +8,7 @@ This documentation is provided by [Websoft9](https://www.websoft9.com/), it can 
 
 [Zabbix](https://www.zabbix.com) is the ultimate enterprise-level software designed for real-time monitoring of millions of metrics collected from tens of thousands of servers, virtual machines and network devices. 
 
-![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-structure-websoft9.png)
+![](https://libs.websoft9.com/Websoft9/DocsPicture/en/zabbix/zabbix-gui-websoft9.png)
 
 ## Improve
 

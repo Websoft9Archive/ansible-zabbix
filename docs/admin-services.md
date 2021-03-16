@@ -5,42 +5,53 @@ These commands you must know when you using the Zabbix of Websoft9
 ### Zabbix-Server
 
 ```shell
-systemctl start zabbix-server
-systemctl restart zabbix-server
-systemctl stop zabbix-server
-systemctl status zabbix-server
+sudo docker start zabbix-server
+sudo docker restart zabbix-server
+sudo docker stop zabbix-server
+sudo docker stats zabbix-server
 ```
 
-### Zabbix-Agent
+### Zabbix-Web
 
 ```shell
-systemctl start zabbix-agent
-systemctl restart zabbix-agent
-systemctl stop zabbix-agent
-systemctl status zabbix-agent
+sudo docker start zabbix-web
+sudo docker restart zabbix-web
+sudo docker stop zabbix-web
+sudo docker stats zabbix-web
 ```
 
-### Apache
+### Zabbix-Proxy
 
 ```shell
-##For Ubuntu&Debian
-sudo systemctl start apache2
-sudo systemctl stop apache2
-sudo systemctl restart apache2
-sudo systemctl status apache2
-
-##For Centos&Redhat
-sudo systemctl start httpd
-sudo systemctl stop httpd
-sudo systemctl restart httpd
-sudo systemctl status httpd
+sudo docker start zabbix-proxy
+sudo docker restart zabbix-proxy
+sudo docker stop zabbix-proxy
+sudo docker stats zabbix-proxy
 ```
 
-### MariaDB
+### phpMyAdmin
 
 ```shell
-sudo systemctl start mysql
-sudo systemctl stop mysql
-sudo systemctl restart mysql
-sudo systemctl status mysql
+sudo docker start phpmyadmin
+sudo docker restart phpmyadmin
+sudo docker stop phpmyadmin
+sudo docker stats phpmyadmin
+```
+
+### Nginx
+
+```shell
+sudo sudo systemctl start nginx
+sudo sudo systemctl stop nginx
+sudo sudo systemctl restart nginx
+sudo sudo systemctl status nginx
+```
+
+### MySQL
+
+```shell
+sudo sudo systemctl start mysql
+sudo sudo systemctl stop mysql
+sudo sudo systemctl restart mysql
+sudo sudo systemctl status mysql
 ```

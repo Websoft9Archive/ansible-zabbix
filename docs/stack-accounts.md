@@ -10,7 +10,6 @@ These accounts are required for Zabbix image installation and configuration
 
 * Zabbix administrator username: `Admin`
 * Zabbix administrator password: stored in the file of your server */credentials/password.txt*
-  > If there no password.txt exist, the administrator password is `zabbix`
 
 ## MySQL
 
@@ -29,8 +28,8 @@ These accounts are required for Zabbix image installation and configuration
    | --- | --- | --- |
    |  Azure   |  It was set by yourself when created instance   | [How to enable root access?](https://support.websoft9.com/docs/azure/server-login.html#sample2-enable-the-root-username) |
    |  AWS CentOS   |  centos   | [How to enable root access?](https://support.websoft9.com/docs/aws/server-login.html#sample2-enable-the-root-username) |
-   |  AWS AmaonLinux   |  ec2-user   | [How to enable root access?](https://support.websoft9.com/docs/aws/server-login.html#sample2-enable-the-root-username) |
+   |  AWS AmazonLinux   |  ec2-user   | [How to enable root access?](https://support.websoft9.com/docs/aws/server-login.html#sample2-enable-the-root-username) |
    |  AWS Ubuntu   |  ubuntu   | [How to enable root access?](https://support.websoft9.com/docs/aws/server-login.html#sample2-enable-the-root-username) |
-   |  Alibaba Cloud, HUAWEI CLOUD, Tencent Cloud |  root   |
+   |  Alibaba Cloud, HUAWEI CLOUD, TenCent Cloud |  root   |
 
    > If don't remember the password of Linux, you should reset password on Cloud Console

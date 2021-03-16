@@ -1,8 +1,16 @@
 # FAQ
 
-#### Zabbix support multi-language?
+#### Does Zabbix support multi-language?
 
 Yes
+
+#### How does this deployment plan install Zabbix?
+
+Docker
+
+#### Will Docker installation lose data?
+
+Zabbix have mount to volume, and database MySQL is based on non-container deployment
 
 #### What is the default character set?
 
@@ -10,7 +18,11 @@ UTF-8
 
 #### Is Zabbix-Proxy included in this deployment solution?
 
-No, Zabbix proxy is a process that may collect monitoring data from one or more monitored devices and send the information to the Zabbix server, deploying a proxy is optional, but may be very beneficial to distribute the load of a single Zabbix server. If only proxies collect data, processing on the server becomes less CPU and disk I/O hungry.
+Yes
+
+#### What components included in this Zabbix deployment solution? 
+
+Zabbix-Server, Zabbix-Web, Zabbix-Proxy, Zabbix-Agent, Zabbix-java-gateway  
 
 #### What's Zabbix-Sender?
 
@@ -23,7 +35,7 @@ Zabbix get is a command line utility which can be used to communicate with Zabbi
 
 #### Can I use the RDS of Cloud Provider for Zabbix?
 
-No
+Yes
 
 #### Where is the database connection configuration of Zabbix?
 
