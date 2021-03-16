@@ -1,16 +1,6 @@
 # CHANGELOG
 
-## To do
-
-1. AmazonLinux
-
-## Logs
-
-
-### Bug Fixes
-
-
-### Features
-
-* 2020-07-28 Modulation created
+## Release v5.2-1 2021-3-11
+### Fixes and Enhancements
+- Zabbix change install way, docker install #9
 

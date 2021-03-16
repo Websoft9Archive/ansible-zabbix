@@ -4,6 +4,11 @@
 
 支持多语言（包含中文），通过[后台设置](/zh/solution-more.html#zabbix-语言包)即可
 
+#### Zabbix 有哪些组件？
+
+Zabbix 是一个解决方案，包含了：Zabbix-Server，Zabbix-Web，Zabbix-Proxy，Zabbix-Agent，Zabbix-java-gateway等组件。  
+Zabbix-Web 是可视化的 Web 控制台，与 Zabbix-Server 是分离的。
+
 #### 部署包中是否默认预装了 Zabbix-Proxy？
 
 没有预装 Zabbix-Proxy，Proxy 适合于 Zabbix 分布式部署架构中从 Zabbix-Agent 采集数据，用于减轻 Zabbix-Server 的压力。
