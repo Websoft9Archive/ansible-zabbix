@@ -99,11 +99,10 @@ services:
 
  zabbix-web-apache-mysql:
   image: zabbix/zabbix-web-apache-mysql:centos-4.0-latest
-  container_name: zabbix-apache
+  container_name: zabbix-web
   restart: always
   ports:
-   - "80:8080"
-   - "443:8443"
+   - "9006:8080"
   links:
    - zabbix-server:zabbix-server
   volumes:
