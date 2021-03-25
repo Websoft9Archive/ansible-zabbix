@@ -19,7 +19,8 @@ init_db:
     config_paths:
       - /data/wwwroot/zabbix/.env_db_mysql
       - /data/wwwroot/zabbix/.env_db_mysql_proxy
-
+    commands:
+      - sudo mysql -uroot -p"$new_password" -e "alter user 'zabbix'@'%' identified with mysql_native_password by '$new_password';"
 
 init_docker:
   zabbix:
