@@ -20,7 +20,7 @@
     [ -f docker-compose-production-{{zabbix_version}}.yml ] && mv docker-compose-production-{{zabbix_version}}.yml docker-compose.yml
     [ -f .env_all ] && mv .env_all .env
   args:
-    chdir: {{zabbix_work_dir}}
+    chdir: '{{zabbix_work_dir}}'
     
 - name: Run docker-compose 
   shell: | 
