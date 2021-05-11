@@ -1,3 +1,3 @@
-- name:  check_dockerapp_service
+- name:  check_zabbix_service
   debug:
-    var: check_dockerapp_service.stdout_lines
+    var: check_zabbix_service.stdout_lines
