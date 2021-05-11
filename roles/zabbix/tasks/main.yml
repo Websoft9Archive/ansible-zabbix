@@ -43,7 +43,7 @@
 # check service and version
 - name: Check zabbix service 
   shell: >
-    docker inspect  --format='{{.Name}} status {{.State.Status}}' $(docker ps -aq) |cut -b1 --complement
+    docker ps -a |awk '{print $2,$7}'
   register: check_zabbix_service
   notify: check_zabbix_service
     
