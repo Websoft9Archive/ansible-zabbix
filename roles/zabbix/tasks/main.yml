@@ -4,7 +4,7 @@
 - name: Clone zabbix in Websoft9 
   git:
     repo: "{{zabbix_git_url}}"
-    dest: "{{zabbix_work_path}}"
+    dest: "{{zabbix_work_dir}}"
     version: dev
 
 - name: Create dir for zabbix
@@ -12,7 +12,7 @@
     state: directory
     path: "{{item}}"
   loop: 
-    - {{zabbix_work_path}}/volumes
+    - {{zabbix_work_dir}}/volumes
     - /data/db/mysql
 
 - name: Rename compose and env filename
@@ -20,14 +20,14 @@
     [ -f docker-compose-production-{{zabbix_version}}.yml ] && mv docker-compose-production-{{zabbix_version}}.yml docker-compose.yml
     [ -f .env_all ] && mv .env_all .env
   args:
-    chdir: {{zabbix_work_path}}
+    chdir: {{zabbix_work_dir}}
     
 - name: Run docker-compose 
   shell: | 
     docker-compose up -d
     sleep 30
   args:
-    chdir: {{zabbix_work_path}}
+    chdir: {{zabbix_work_dir}}
 
 - name: Set soft link for zabbix
   file:
@@ -36,8 +36,8 @@
     state: link
     force: yes
   with_items:
-  - {src: '{{zabbix_work_path}}'/volumes/var/lib/mysql/,dest: /data/db/mysql}
-  - {src: '{{zabbix_work_path}}'/volumes/etc/zabbix/zabbix_agentd.d/,dest: /data/conf/zabbix}
+  - {src: '{{zabbix_work_dir}}/volumes/var/lib/mysql/',dest: /data/db/mysql}
+  - {src: '{{zabbix_work_dir}}/volumes/etc/zabbix/zabbix_agentd.d/',dest: /data/conf/zabbix}
 
 # check service and version
 - name: Check zabbix service 
