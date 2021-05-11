@@ -38,7 +38,7 @@
     force: yes
   with_items:
   - {src: '{{zabbix_work_dir}}/volumes/var/lib/mysql/',dest: /data/db/mysql}
-  - {src: '{{zabbix_work_dir}}/volumes/etc/zabbix/zabbix_agentd.d/',dest: /data/conf/zabbix}
+  - {src: '{{zabbix_work_dir}}/volumes/etc/zabbix/zabbix_agentd.d/',dest: /data/config/zabbix}
 
 # check service and version
 - name: Check zabbix service 
