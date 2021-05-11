@@ -24,4 +24,4 @@ init_docker:
     volumes:
       - /data/wwwroot/zabbix/volumes
     commands: 
-      - sudo mysql -uroot -p"$new_password" -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
+      - sudo mysql -uroot -p"$new_password" -h 127.0.0.1 -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
