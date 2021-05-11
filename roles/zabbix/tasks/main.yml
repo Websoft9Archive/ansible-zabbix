@@ -27,7 +27,7 @@
     docker-compose up -d
     sleep 30
   args:
-    chdir: {{zabbix_work_dir}}
+    chdir: '{{zabbix_work_dir}}'
 
 - name: Set soft link for zabbix
   file:
