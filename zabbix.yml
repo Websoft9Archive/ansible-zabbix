@@ -25,12 +25,6 @@
       '4': '3.0'
 
     zabbix_version: "{{zabbix_version_select[zabbix_version_selection]}}" 
-    zabbix_db_root_password: "{{mysql_root_password}}"
-  pre_tasks: 
-    - set_fact: 
-        mysql_version: "5.7"
-      when: zabbix_version == "3.0"
-        
 
   roles:
     - { role: role_common, tags: "role_common"} 

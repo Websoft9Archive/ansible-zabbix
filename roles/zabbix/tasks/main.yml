@@ -1,47 +1,55 @@
-- name: Create a zabbix dir
+- name: Delete zabbix dir for sec_installation
+  shell: rm -rf {{zabbix_work_dir}}
+
+- name: Clone zabbix in Websoft9 
+  git:
+    repo: "{{zabbix_git_url}}"
+    dest: "{{zabbix_work_path}}"
+    version: dev
+
+- name: Create dir for zabbix
   file: 
     state: directory
-    path: /data/wwwroot/zabbix
+    path: "{{item}}"
+  loop: 
+    - {{zabbix_work_path}}/volumes
+    - /data/db/mysql
 
-- name: Copy mysql environment and zabbix docker-compose file
-  template: 
-    src: '{{item.src}}'
-    dest: '{{item.dest}}'
-  with_items:
-    - {src: .env_db_mysql,dest: /data/wwwroot/zabbix/.env_db_mysql}
-    - {src: .env_db_mysql_proxy,dest: /data/wwwroot/zabbix/.env_db_mysql_proxy}
-    - {src: 'docker-compose-{{zabbix_version}}.yml',dest: /data/wwwroot/zabbix/docker-compose.yml}
-
-- name: Download .env file for zabbix{{zabbix_version}}
-  get_url:
-    url: https://raw.githubusercontent.com/zabbix/zabbix-docker/{{zabbix_version}}/{{item}}
-    dest: /data/wwwroot/zabbix/{{item}}
-  with_items:
-    - .env_agent
-    - .env_java
-    - .env_prx
-    - .env_prx_mysql
-    - .env_srv
-    - .env_web
-
-- name: Use docker-compose run zabbix
+- name: Rename compose and env filename
+  shell: |
+    [ -f docker-compose-production-{{zabbix_version}}.yml ] && mv docker-compose-production-{{zabbix_version}}.yml docker-compose.yml
+    [ -f .env_all ] && mv .env_all .env
+  args:
+    chdir: {{zabbix_work_path}}
+    
+- name: Run docker-compose 
   shell: | 
     docker-compose up -d
     sleep 30
   args:
-    chdir: /data/wwwroot/zabbix
+    chdir: {{zabbix_work_path}}
+
+- name: Set soft link for zabbix
+  file:
+    src: '{{item.src}}'
+    dest: '{{item.dest}}'
+    state: link
+    force: yes
+  with_items:
+  - {src: {{zabbix_work_path}}/volumes/var/lib/mysql/,dest: /data/db/mysql}
+  - {src: {{zabbix_work_path}}/volumes/etc/zabbix/zabbix_agentd.d/,dest: /data/conf/zabbix}
 
 # check service and version
-- name: Copy script files to remote
-  copy: src=check_dockerapp_service.sh dest=/tmp/check_dockerapp_service.sh
-
-- name: Check dockerapp service
-  shell: bash /tmp/check_dockerapp_service.sh
-  register: check_dockerapp_service
-  notify: check_dockerapp_service
+- name: Check zabbix service 
+  shell: >
+    docker inspect  --format='{{.Name}} status {{.State.Status}}' $(docker ps -aq) |cut -b1 --complement
+  register: check_zabbix_service
+  notify: check_zabbix_service
     
 - name: Check zabbix version
-  shell: >
+  shell: |
     sudo echo "zabbix version:" $(docker images |grep zabbix-server |cut -d- -f4) |sudo tee -a /data/logs/install_version.txt  
-  
-    
+
+- name: Check mysql version
+  shell: |
+    sudo echo "mysql version:" $(docker inspect zabbix-mysql |grep -i mysql_version |cut -d= -f2) |sudo tee -a /data/logs/install_version.txt  

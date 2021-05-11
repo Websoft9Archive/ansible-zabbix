@@ -1,37 +1,29 @@
-common_os_support: ["CentOS", "Ubuntu", "Amazon"]
+common_install_docker: True
+docker_install: False
+mysql_install_server: False
+
 docker_applications: 
   - phpmyadmin
-
-mysql_version: "8.0"
-mysql_root_password: "123456"
-mysql_remote: True
 
 nginx_appname: "zabbix"
 nginx_vhost_mode: "reverse"
 nginx_reverse_proxy_port: "9006"
 nginx_certbot: True
 
-init_db: 
-  mysql:
-    admin: root
-    users: ["zabbix"]
-    password: "123456" 
-    config_paths:
-      - /data/wwwroot/zabbix/.env_db_mysql
-      - /data/wwwroot/zabbix/.env_db_mysql_proxy
-    commands:
-      - sudo mysql -uroot -p"$new_password" -e "alter user 'zabbix'@'%' identified with mysql_native_password by '$new_password';"
-
 init_docker:
   zabbix:
+    db: mysql
+    db_name: zabbix
+    db_username: zabbix
+    db_password: "123456"
     admin_username: Admin
     admin_password: "zabbix"
     service_after: "docker.service"
     compose_path: "/data/wwwroot/zabbix/docker-compose.yml"
     compose_commands:
-      - sudo mysql -uroot -p"$new_password" -e "drop database zabbix"
-      - sudo mysql -uroot -p"$new_password" -e "drop database zabbix_proxy"
+      - cd /data/wwwroot/zabbix
+      - sudo sed -i "s/123456/$new_password/g" /data/wwwroot/zabbix/.env 
+    volumes:
+      - /data/wwwroot/zabbix/volumes
     commands: 
-      - sleep 20
       - sudo mysql -uroot -p"$new_password" -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
-      - sudo docker-compose -f /data/wwwroot/zabbix/docker-compose.yml up -d
