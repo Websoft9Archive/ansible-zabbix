@@ -12,7 +12,7 @@
     state: directory
     path: "{{item}}"
   loop: 
-    - {{zabbix_work_dir}}/volumes
+    - "{{zabbix_work_dir}}"/volumes
     - /data/db/mysql
 
 - name: Rename compose and env filename
