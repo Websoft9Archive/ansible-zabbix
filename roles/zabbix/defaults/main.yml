@@ -1,6 +1,6 @@
 # 5.2 | 5.0 | 4.0 | 3.0
 zabbix_version: "5.2"
 
-zabbix_work_dir: "/data/wwwroot/zabbix"
+zabbix_work_dir: /data/wwwroot/zabbix
 
 zabbix_git_url: "https://github.com/Websoft9/docker-zabbix.git"
