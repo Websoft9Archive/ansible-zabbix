@@ -36,8 +36,8 @@
     state: link
     force: yes
   with_items:
-  - {src: '{{zabbix_work_path}}/volumes/var/lib/mysql/',dest: /data/db/mysql}
-  - {src: '{{zabbix_work_path}}/volumes/etc/zabbix/zabbix_agentd.d/',dest: /data/conf/zabbix}
+  - {src: '{{zabbix_work_path}}'/volumes/var/lib/mysql/,dest: /data/db/mysql}
+  - {src: '{{zabbix_work_path}}'/volumes/etc/zabbix/zabbix_agentd.d/,dest: /data/conf/zabbix}
 
 # check service and version
 - name: Check zabbix service 
