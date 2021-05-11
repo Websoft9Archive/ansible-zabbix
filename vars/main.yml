@@ -22,7 +22,7 @@ init_docker:
     compose_path: "/data/wwwroot/zabbix/docker-compose.yml"
     compose_commands:
       - cd /data/wwwroot/zabbix
-      - sudo sed -i "s/123456/$new_password/g" /data/wwwroot/zabbix/.env 
+      - sudo sed -i "s/123456/$new_password/g" .env 
     volumes:
       - /data/wwwroot/zabbix/volumes
     commands: 
