@@ -5,7 +5,6 @@
   git:
     repo: "{{zabbix_git_url}}"
     dest: "{{zabbix_work_dir}}"
-    version: dev
 
 - name: Create dir for zabbix
   file: 
