@@ -24,6 +24,4 @@ init_docker:
     volumes:
       - /data/wwwroot/zabbix/volumes
     commands: 
-      - sudo sleep 40s
-      - sudo mysql -uroot -p"$new_password" -h 127.0.0.1 -e "update zabbix.users set passwd=md5('$new_password') where alias='Admin';"
-      - sudo echo -e "\e[1;31m Password initialization takes about 2-3 minutes, please wait... \e[0m" |tee -a /credentials/password.txt
+     - source /tmp/change_login_passwd.sh
