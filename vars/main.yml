@@ -24,4 +24,4 @@ init_docker:
     volumes:
       - /data/wwwroot/zabbix/volumes
     commands: 
-     - source /tmp/change_login_passwd.sh
+     - source /opt/change_login_passwd.sh

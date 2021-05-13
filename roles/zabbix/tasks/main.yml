@@ -32,7 +32,7 @@
 - name: Copy the modify login password script 
   copy:
     src: change_login_passwd.sh
-    dest: /tmp/change_login_passwd.sh
+    dest: /opt/change_login_passwd.sh
     mode: ugo+x
 
 - name: Set soft link for zabbix
