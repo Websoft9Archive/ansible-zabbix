@@ -19,7 +19,7 @@
 
 ## 组件
 
-包含的核心组件为：Zabbix + Apache + MariaDB + PHP
+包含的核心组件为：Zabbix + Nginx + MariaDB + PHP
 
 更多请见[参数表](/docs/zh/stack-components.md)
 

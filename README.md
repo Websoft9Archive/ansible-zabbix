@@ -6,7 +6,7 @@
 
 [English](/README.md) | [简体中文](/README-zh.md)  
 
-**Zabbix Cloud Installer**, developed by [Websoft9](https://www.websoft9.com), is an automatic installation program of [Zabbix](https://www.zabbix.com/cn) based on Ansible and shell. It helps user install Zabbix and pre-configure required items automatically and users only need to run a command on Linux. It simplifies the complicated installation and initialization process.  
+**Zabbix Cloud Installer**, developed by [Websoft9](https://www.websoft9.com), is an automatic installation program of [Zabbix](https://www.zabbix.com) based on Ansible and shell. It helps user install Zabbix and pre-configure required items automatically and users only need to run a command on Linux. It simplifies the complicated installation and initialization process.  
 
 ## System Requirement
 
@@ -17,13 +17,13 @@ System Requirement to install this repository are as following：
 | Operating System   | CentOS7.x, Ubuntu18, Ubuntu20, AmazonLinux2 | Optional                 |
 | Public Cloud     | AWS, Azure, Alibaba Cloud, HUAWEI ClOUD, TenCent Cloud    | Optional                 |
 | Private Cloud     | KVM, VMware, VirtualBox, OpenStack    | Optional                 |
-| Server Configuration | vCPU no less than 1 core, Memory no less than  2 GIB, Storage no less than 10 GB, Bandwidth no less than 100M ||
+| Server Configuration | vCPU no less than 1 core, Memory no less than  1 GIB, Storage no less than 10 GB, Bandwidth no less than 100M ||
 
-To learn more information, please view [Installation requirements](https://www.zabbix.com/documentation/5.0/zh/manual/installation/requirements).
+To learn more information, please view [Installation requirements](https://www.zabbix.com/documentation/5.0/manual/installation/requirements).
 
 ## Ecosystem
 
-Core components of this repository: Zabbix(server,proxy,web,snmptraps,java-gateway), Nginx, MySQL, Docker, phpPgAdmin on docker
+Core components of this repository: Zabbix(server,proxy,web,snmptraps,java-gateway), Nginx, MySQL, Docker, phpMyAdmin on docker
 
 Learn more about [Parameters](/docs/stack-components.md).
 
