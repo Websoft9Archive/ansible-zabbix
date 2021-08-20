@@ -1,7 +1,7 @@
 {
   "name": "zabbix",
   "trademark": "Zabbix",
-  "official_url": "https://www.zabbix.com/download",
+  "official_url": "https://www.zabbix.com/",
   "support_os": "CentOS7.x, Ubuntu20.04, Amazon Linux2",
   "requirements_cpu": "1",
   "requirements_memory": "1",
@@ -14,5 +14,5 @@
     "en": "Docker isntallation",
     "zh": "Docker 安装"
   },
-  "install_url": "https://www.zabbix.com/download"
+  "install_url": "https://www.zabbix.com/manuals"
 }
