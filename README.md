@@ -6,7 +6,7 @@
 
 [English](/README.md) | [简体中文](/README-zh.md)  
 
-**Zabbix Cloud Installer**, developed by [Websoft9](https://www.websoft9.com), is an automatic installation program of [Zabbix](https://www.zabbix.com/download) based on Ansible and shell. It helps user install Zabbix and pre-configure required items automatically and users only need to run a command on Linux. It simplifies the complicated installation and initialization process.  
+**Zabbix Cloud Installer**, developed by [Websoft9](https://www.websoft9.com), is an automatic installation program of [Zabbix](https://www.zabbix.com/) based on Ansible and shell. It helps user install Zabbix and pre-configure required items automatically and users only need to run a command on Linux. It simplifies the complicated installation and initialization process.  
 
 ## System Requirement
 
@@ -62,7 +62,7 @@ This program provided by Websoft9 contains a series of software with separate co
 
 #### How to install and view the latest release?
 
-This repository install way is Docker isntallation, you can  view the version from [Official URL](https://www.zabbix.com/download).  
+This repository install way is Docker isntallation, you can  view the version from [Official URL](https://www.zabbix.com/manuals).  
 We will check [Release version](https://github.com/Websoft9/ansible-zabbix/releases) regularly. Update and test this project to ensure that users can successfully install the required version of Zabbix.
 
 #### Can I run this repository on Ansible Tower? 

@@ -3,7 +3,7 @@
 
 [English](/README.md) | [简体中文](/README-zh.md)  
 
-本项目是由 [Websoft9](https://www.websoft9.com) 研发的 [Zabbix](https://www.zabbix.com/download) 自动化安装程序，开发语言是 Ansible。使用本项目，只需要用户在 Linux 上运行一条命令，即可自动化安装 Zabbix，并预配置必要项，让原本复杂的安装和与配置过程变得没有任何技术门槛。
+本项目是由 [Websoft9](https://www.websoft9.com) 研发的 [Zabbix](https://www.zabbix.com/) 自动化安装程序，开发语言是 Ansible。使用本项目，只需要用户在 Linux 上运行一条命令，即可自动化安装 Zabbix，并预配置必要项，让原本复杂的安装和与配置过程变得没有任何技术门槛。
 
 ## 配置要求
 
@@ -54,7 +54,7 @@ wget -N https://ghproxy.com/https://raw.githubusercontent.com/Websoft9/ansible-l
 
 #### 本项目安装的是 Zabbix 最新版吗？
 
-本项目通过Docker 安装，请通过[官方URL](https://www.zabbix.com/download)页面查看版本号。  
+本项目通过Docker 安装，请通过[官方URL](https://www.zabbix.com/manuals)页面查看版本号。  
 我们会定期检查[Release版本](https://github.com/Websoft9/ansible-zabbix/releases)，更新并测试此项目，以保证用户可以顺利安装所需的Zabbix版本。 
  
 #### 命令脚本部署与镜像部署有什么区别？
