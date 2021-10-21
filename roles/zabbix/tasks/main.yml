@@ -14,14 +14,9 @@
     - '{{zabbix_work_dir}}/volumes'
     - /data/db/mysql
 
-- name: Rename compose and env filename
+- name: Rename compose and Run docker-compose 
   shell: |
     [ -f docker-compose-{{zabbix_version}}.yml ] && rm -f docker-compose.yml && mv docker-compose-{{zabbix_version}}.yml docker-compose.yml
-  args:
-    chdir: '{{zabbix_work_dir}}'
-    
-- name: Run docker-compose 
-  shell: | 
     docker-compose up -d
     sleep 30
   args:
