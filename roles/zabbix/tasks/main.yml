@@ -16,7 +16,7 @@
 
 - name: Rename compose and Run docker-compose 
   shell: |
-    sed -i "s/APP_VERSION=.*/APP_VERSION=test/g" .env
+    sed -i "s/APP_VERSION=.*/APP_VERSION={{zabbix_version}}/g" .env
     docker-compose up -d
     sleep 30
   args:
