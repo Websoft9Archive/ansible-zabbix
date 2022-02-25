@@ -16,7 +16,7 @@
 
 - name: Rename compose and Run docker-compose 
   shell: |
-    [ -f docker-compose-{{zabbix_version}}.yml ] && rm -f docker-compose.yml && mv docker-compose-{{zabbix_version}}.yml docker-compose.yml
+    sed -i "s/APP_VERSION=.*/APP_VERSION=test/g" .env
     docker-compose up -d
     sleep 30
   args:
